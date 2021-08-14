@@ -22,7 +22,7 @@ import io.redleanServices.positionnement.service.EntretienClientServicelmpl;
 
 @RestController
 @PreAuthorize("hasRole('Admin')")
-@RequestMapping("EntretienClient")
+@RequestMapping("/a/entretienClient")
 public class RestEntretienClient {
 	@Autowired 
 	EntretienClientRepository entretienClientRepository;

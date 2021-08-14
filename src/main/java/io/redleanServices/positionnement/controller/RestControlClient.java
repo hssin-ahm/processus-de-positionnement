@@ -21,7 +21,7 @@ import io.redleanServices.positionnement.service.ClientServicelmpl;
 
 @RestController
 @PreAuthorize("hasRole('Admin')")
-@RequestMapping("Client")
+@RequestMapping("/a/client")
 public class RestControlClient {
 
 	@Autowired 
@@ -58,7 +58,7 @@ public class RestControlClient {
 	
 	
 	//http://localhost:8081/SpringMVC/servlet/Client/get-all-Clients
-	@GetMapping("/get-all-Clients") 
+	@GetMapping("/get-all-clients") 
 	@ResponseBody 
 	
 	 public List<client> getAllclients() { 

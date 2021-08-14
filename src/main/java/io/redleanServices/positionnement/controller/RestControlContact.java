@@ -25,7 +25,7 @@ import io.redleanServices.positionnement.service.ContactServiceImpl;
 
 @RestController
 @PreAuthorize("hasRole('Admin')")
-@RequestMapping("Contact")
+@RequestMapping("/a/contact")
 public class RestControlContact {
 
 	@Autowired 
@@ -58,7 +58,7 @@ public class RestControlContact {
 	
 	
 	//http://localhost:8081/SpringMVC/servlet/Contact/get-all-Contacts
-	@GetMapping("/get-all-Contacts") 
+	@GetMapping("/get-all-contacts") 
 	@ResponseBody 
 	
 	 public List<Contact> getAllContacts() { 

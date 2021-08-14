@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @PreAuthorize("hasRole('Admin')")
-@RequestMapping("/consultant")
+@RequestMapping("/a/consultant")
 public class ConsultantController {
     private final ConsultantServiceImpl consultantService;
 

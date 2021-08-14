@@ -32,7 +32,7 @@ import io.redleanServices.positionnement.service.PartenaireSerivelmpl;
 
 @RestController
 @PreAuthorize("hasRole('Admin')")
-@RequestMapping("Partenaire")
+@RequestMapping("/a/partenaire")
 public class RestControlPartenaire   {
 
 	@Autowired 
