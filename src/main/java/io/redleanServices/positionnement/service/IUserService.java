@@ -1,6 +1,7 @@
 package io.redleanServices.positionnement.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import io.redleanServices.positionnement.entity.User;
 
@@ -13,5 +14,9 @@ public interface IUserService {
 	List<User> getUsers();
 
 	void addRoleToUser(String username, String roleName);
+
+	void deleteUser(String id);
+
+	void updateUser(User user);
 
 }

@@ -11,3 +11,4 @@ spring:
         dialect: org.hibernate.dialect.MySQL5Dialect
     show-sql: true
     generate-ddl : true
+    
