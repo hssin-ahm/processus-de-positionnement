@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @PreAuthorize("hasRole('Super_Admin')")
-@RequestMapping("/sa")
 public class RoleController {
 
     @Autowired

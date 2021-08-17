@@ -20,7 +20,7 @@ import io.redleanServices.positionnement.service.TestTechniqueClientServicelmpl;
 
 @RestController
 @PreAuthorize("hasRole('Admin')")
-@RequestMapping("/a/testTechniqueClient")
+@RequestMapping("/testTechniqueClient")
 public class RestControlTestTechniqueClient {
 	@Autowired 
 	TestTechniqueClientRepository testTechniqueClientRepository;

@@ -22,7 +22,7 @@ import io.redleanServices.positionnement.service.CvEnvoyeeSercicelmpl;
 
 @RestController
 @PreAuthorize("hasRole('Admin')")
-@RequestMapping("/a/cvEnvoyee")
+@RequestMapping("/cvEnvoyee")
 public class RestControlCvEnvoyee {
 	@Autowired 
 	CvEnvoyeeRepository cvEnvoyeeRepository;

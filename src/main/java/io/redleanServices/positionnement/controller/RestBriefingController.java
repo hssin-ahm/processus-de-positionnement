@@ -20,7 +20,7 @@ import io.redleanServices.positionnement.service.BriefingServicelmpl;
 
 @RestController
 @PreAuthorize("hasRole('Admin')")
-@RequestMapping("/a/Briefing")
+@RequestMapping("/Briefing")
 public class RestBriefingController {
 	@Autowired 
 	BriefingRepository briefingRepository;

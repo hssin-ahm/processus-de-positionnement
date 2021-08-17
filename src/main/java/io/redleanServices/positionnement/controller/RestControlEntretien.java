@@ -21,7 +21,7 @@ import io.redleanServices.positionnement.service.EntretienServicelmpl;
 
 @RestController
 @PreAuthorize("hasRole('Admin')")
-@RequestMapping("/a/entretien")
+@RequestMapping("/entretien")
 public class RestControlEntretien {
 	@Autowired 
 	EntretienRepository entretienRepository;

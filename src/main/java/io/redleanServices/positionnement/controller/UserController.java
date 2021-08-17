@@ -21,7 +21,6 @@ import javax.annotation.PostConstruct;
 
 @RestController
 @PreAuthorize("hasRole('Super_Admin')")
-@RequestMapping("/sa")
 public class UserController {
 
     @Autowired
@@ -48,15 +47,8 @@ public class UserController {
         userService.addRoleToUser(form.getUsername(), form.getRoleName());
         return ResponseEntity.ok().build();
     }
-    @GetMapping({"/forAdmin"})
-    public String forAdmin(){
-        return "This URL is only accessible to the admin";
-    }
+  
 
-    @GetMapping({"/forUser"})
-    public String forUser(){
-        return "This URL is only accessible to the user";
-    }
     @GetMapping({"/users/all"})
     public ResponseEntity<List<User>>getUsers() {
         return ResponseEntity.ok().body(userService.getUsers());

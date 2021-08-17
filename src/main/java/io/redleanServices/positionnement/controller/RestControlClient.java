@@ -21,7 +21,7 @@ import io.redleanServices.positionnement.service.ClientServicelmpl;
 
 @RestController
 @PreAuthorize("hasRole('Admin')")
-@RequestMapping("/a/client")
+@RequestMapping("/client")
 public class RestControlClient {
 
 	@Autowired 

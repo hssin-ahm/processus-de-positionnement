@@ -22,7 +22,7 @@ import io.redleanServices.positionnement.entity.Validation;
 
 @RestController
 @PreAuthorize("hasRole('Admin')")
-@RequestMapping("/a/validation")
+@RequestMapping("/validation")
 public class RestControlValidation {
 	@Autowired 
 	ValidationRepository ValidationRepository;

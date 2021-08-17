@@ -22,7 +22,7 @@ import io.redleanServices.positionnement.service.PositionnementServicelmpl;
 
 @RestController
 @PreAuthorize("hasRole('Admin')")
-@RequestMapping("/a/positionnement")
+@RequestMapping("/positionnement")
 public class RestControlPositionnement {
 	@Autowired
 	PositionnementRepository positionnementRepository;

@@ -25,7 +25,7 @@ import io.redleanServices.positionnement.service.ContactServiceImpl;
 
 @RestController
 @PreAuthorize("hasRole('Admin')")
-@RequestMapping("/a/contact")
+@RequestMapping("/contact")
 public class RestControlContact {
 
 	@Autowired 
