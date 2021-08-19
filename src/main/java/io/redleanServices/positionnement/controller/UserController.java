@@ -55,7 +55,7 @@ public class UserController {
         userService.addRoleToUser(form.getUsername(), form.getRoleName());
         return ResponseEntity.ok().build();
     }
-  
+ 
 
     @GetMapping({"/users/all"})
     public ResponseEntity<List<User>>getUsers() {

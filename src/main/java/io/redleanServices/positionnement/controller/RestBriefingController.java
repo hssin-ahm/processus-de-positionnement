@@ -38,7 +38,6 @@ public class RestBriefingController {
 
 }*/
 
-
 //http://localhost:8081/SpringMVC/servlet/Briefing/ajouterBriefing
 	@PostMapping("/ajouterBriefing")
 	@ResponseBody

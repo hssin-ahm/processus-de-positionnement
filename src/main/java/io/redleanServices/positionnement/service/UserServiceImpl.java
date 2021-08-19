@@ -5,6 +5,9 @@ import io.redleanServices.positionnement.entity.Role;
 import io.redleanServices.positionnement.entity.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,18 +28,23 @@ public class UserServiceImpl implements IUserService{
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Value("${spring.datasource.url}")
+    private String url;
 
-   
+    @Value("${spring.datasource.username}")
+    private String userName;
+    
     public void initRoleAndUser() {
 
         Role adminRole = new Role();
         adminRole.setRoleName("Super_Admin");
-        adminRole.setRoleDescription("Admin role");
+        // adminRole.setRoleDescription("Admin role");
         roleDao.save(adminRole);
 
         Role userRole = new Role();
         userRole.setRoleName("Admin");
-        userRole.setRoleDescription("Default role");
+        // userRole.setRoleDescription("Default role");
         roleDao.save(userRole);
 
         User adminUser = new User();
@@ -88,9 +96,16 @@ public class UserServiceImpl implements IUserService{
 	}
 	@Override
 	public void deleteUser(String username) {
+		this.deleteUserRole(username);
 		userDao.deleteById(username);
-		
 	}
+	public void deleteUserRole(String username) {
+		 DriverManagerDataSource dataSource = new DriverManagerDataSource();
+	        dataSource.setUrl(url);
+	        dataSource.setUsername(userName);
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		jdbcTemplate.execute("DELETE FROM `user_role` WHERE user_id = '"+ username +"'");
+	} 
 	@Override
 	public void updateUser(User user) {
 		userDao.save(user);
