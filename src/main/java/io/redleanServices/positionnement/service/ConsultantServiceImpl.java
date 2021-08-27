@@ -43,4 +43,9 @@ public class ConsultantServiceImpl implements IConsultantService{
     public void deleteEmployee(Long id){
     	consultantRepo.deleteEmployeeById(id);
     }
+
+	@Override
+	public List<Consultant> findConsultantParKey(String keyword) {
+		return consultantRepo.cherchebyKeyWord(keyword); 
+	}
 }

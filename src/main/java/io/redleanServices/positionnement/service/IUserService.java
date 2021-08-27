@@ -19,4 +19,6 @@ public interface IUserService {
 
 	void updateUser(User user);
 
+	User getUserByUserName(String username);
+
 }

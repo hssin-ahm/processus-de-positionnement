@@ -49,4 +49,11 @@ public class ConsultantController {
     	consultantService.deleteEmployee(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    
+    @GetMapping("/findBy/{keyword}")
+    public ResponseEntity<List<Consultant>> getConsultantParKey (@PathVariable("keyword") String keyword) {
+    	System.out.println(keyword);
+        List<Consultant> consultant = consultantService.findConsultantParKey(keyword);
+        return new ResponseEntity<>(consultant, HttpStatus.OK);
+    }
 }

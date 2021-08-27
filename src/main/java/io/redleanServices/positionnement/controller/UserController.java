@@ -55,13 +55,11 @@ public class UserController {
         userService.addRoleToUser(form.getUsername(), form.getRoleName());
         return ResponseEntity.ok().build();
     }
-    @GetMapping("/user/deleteee/{username}")
-    public String eUser(@PathVariable("username") String username) {
-    	return userService.getEncodedPassword(username);
-    	
+
+    @GetMapping({"/user/{username}"})
+    public ResponseEntity<User>getUserByUserName(@PathVariable("username") String username) {
+        return ResponseEntity.ok().body(userService.getUserByUserName(username));
     }
-
-
     @GetMapping({"/users/all"})
     public ResponseEntity<List<User>>getUsers() {
         return ResponseEntity.ok().body(userService.getUsers());

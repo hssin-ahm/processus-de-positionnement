@@ -61,6 +61,7 @@ public class UserServiceImpl implements IUserService{
         User user = new User();
         user.setUserName("raj123");
         user.setUserPassword(getEncodedPassword("raj@123"));
+        user.setEmail("raj@gmail.com");
         user.setUserFirstName("raj");
         user.setUserLastName("sharma");
         Set<Role> userRoles = new HashSet<>();
@@ -118,5 +119,10 @@ public class UserServiceImpl implements IUserService{
         
 		userDao.save(user);
 		
+	}
+	@Override
+	public User getUserByUserName(String username) {
+		
+		return userDao.findByUserName(username);
 	}
 }

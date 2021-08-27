@@ -15,5 +15,7 @@ public interface IConsultantService {
 	Consultant findEmployeeById(Long id);
 
 	void deleteEmployee(Long id);
+	
+	List<Consultant> findConsultantParKey(String keyword);
 
 }

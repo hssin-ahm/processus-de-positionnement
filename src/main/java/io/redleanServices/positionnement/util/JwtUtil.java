@@ -3,6 +3,8 @@ package io.redleanServices.positionnement.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -13,10 +15,10 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
+	@Value("${jwt.secret}")
+	private String SECRET_KEY;
 
-    private static final String SECRET_KEY = "secret_key";
-
-    private static final int TOKEN_VALIDITY = 3600 * 5;
+    private static final int TOKEN_VALIDITY = 70000 * 5;
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
