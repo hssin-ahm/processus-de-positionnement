@@ -1,5 +1,6 @@
 package io.redleanServices.positionnement.controller;
 
+import io.redleanServices.positionnement.entity.Consultant;
 import io.redleanServices.positionnement.entity.Role;
 import io.redleanServices.positionnement.entity.User;
 import io.redleanServices.positionnement.service.RoleServiceImpl;
@@ -67,6 +68,13 @@ public class UserController {
     @DeleteMapping("/user/delete/{username}")
     public void deleteUser(@PathVariable("username") String username) {
     	userService.deleteUser(username);
+    }
+    
+    @GetMapping("/findUserBy/{keyword}")
+    public ResponseEntity<List<User>> getConsultantParKey (@PathVariable("keyword") String keyword) {
+    	System.out.println(keyword);
+        List<User> user = userService.findConsultantParKey(keyword);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
 class RoleToUserForm {

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -16,7 +17,9 @@ public class Contact  implements Serializable{
 	private String nom ;
 	private String prenom;
 	private String mail ;
+	private String poste ;
 	private Long  telephone  ;
+	
 	public Long getIdContact() {
 		return idContact;
 	}
@@ -47,12 +50,21 @@ public class Contact  implements Serializable{
 	public void setTelephone(Long telephone) {
 		this.telephone = telephone;
 	}
-	public Contact(Long idContact, String nom, String prenom, String mail, Long telephone) {
+	
+	public String getPoste() {
+		return poste;
+	}
+	public void setPoste(String poste) {
+		this.poste = poste;
+	}
+	
+	public Contact(Long idContact, String nom, String prenom, String mail, String poste, Long telephone) {
 		super();
 		this.idContact = idContact;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.mail = mail;
+		this.poste = poste;
 		this.telephone = telephone;
 	}
 	public Contact() {

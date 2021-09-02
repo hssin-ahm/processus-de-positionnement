@@ -21,8 +21,7 @@ public class CvEnvoyeeSercicelmpl implements CvEnvoyeeService {
 	@Override
 	public void deleteCvEnvoyee(CvEnvoyee ec) {
 		// TODO Auto-generated method stub
-		cvEnvoyeeRepository.delete(ec);		
-
+		cvEnvoyeeRepository.delete(ec);
 		
 	}
 
@@ -59,6 +58,10 @@ public class CvEnvoyeeSercicelmpl implements CvEnvoyeeService {
 	public CvEnvoyee updateCvEnvoyee(CvEnvoyee p) {
 		return cvEnvoyeeRepository.save(p);
 
+	}
+	@Override
+	public List<CvEnvoyee> getCvEnvoyeesByConsId(Long id) {
+		return cvEnvoyeeRepository.findAllByConsultantId(id);
 	}
 
 }

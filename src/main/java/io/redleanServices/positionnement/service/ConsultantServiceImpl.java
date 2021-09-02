@@ -37,7 +37,7 @@ public class ConsultantServiceImpl implements IConsultantService{
 	@Override
     public Consultant findEmployeeById(Long id) {
         return consultantRepo.findConsultantById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("User by id " + id + " was not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("Consulant avec id " + id + " pas touver"));
     }
 	@Override
     public void deleteEmployee(Long id){

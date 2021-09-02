@@ -2,7 +2,6 @@ package io.redleanServices.positionnement.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import io.redleanServices.positionnement.entity.Consultant;
 

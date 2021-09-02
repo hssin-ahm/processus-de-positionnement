@@ -4,7 +4,7 @@ import java.util.List;
 
 
 import java.util.Optional;
-
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.redleanServices.positionnement.dao.ContactRepository;
 import io.redleanServices.positionnement.entity.Contact;
+import io.redleanServices.positionnement.entity.CvEnvoyee;
 import io.redleanServices.positionnement.service.ContactServiceImpl;
+import io.redleanServices.positionnement.service.CvEnvoyeeSercicelmpl;
 
 
 @RestController
@@ -34,7 +36,8 @@ public class RestControlContact {
 	@Autowired 
 	ContactServiceImpl contactServiceImpl;
 	
-
+	@Autowired 
+	CvEnvoyeeSercicelmpl cvEnvoyeeSercicelmpl;
 
 	
 	
@@ -121,9 +124,30 @@ public class RestControlContact {
 	 			return contactServiceImpl.getContact(idContact);
 	 		 }
 	    
-	    
+	    @PostMapping("/addcontacttocvenv/{idCv}")
+		@ResponseBody
+		public CvEnvoyee addContactToCvEnv(@RequestBody Contact c, @PathVariable("idCv") Long idCv)
+		{
+	    	CvEnvoyee cvEnvoyee = new CvEnvoyee();
+			contactServiceImpl.saveContact(c);
+			cvEnvoyee = cvEnvoyeeSercicelmpl.getCvEnvoyee(idCv);
+			
+			cvEnvoyee.setContact(c);
+			cvEnvoyeeSercicelmpl.saveCvEnvoyee(cvEnvoyee);
+			return cvEnvoyee;
+		}
 
-	    
+	    @PostMapping("/addmanycontacttocvenv/{idCv}")
+		@ResponseBody
+		public CvEnvoyee addmanyContactToCvEnv(@RequestBody  Set<Contact> c, @PathVariable("idCv") Long idCv)
+		{
+	    	CvEnvoyee cvEnvoyee = new CvEnvoyee();
+			cvEnvoyee = cvEnvoyeeSercicelmpl.getCvEnvoyee(idCv);
+			
+			cvEnvoyee.setManyContact(c);
+			cvEnvoyeeSercicelmpl.saveCvEnvoyee(cvEnvoyee);
+			return cvEnvoyee;
+		}
 	
 	
 }

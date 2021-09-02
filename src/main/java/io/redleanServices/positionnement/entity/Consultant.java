@@ -3,6 +3,7 @@ package io.redleanServices.positionnement.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Consultant implements Serializable {
@@ -24,6 +25,12 @@ public class Consultant implements Serializable {
     @Column(nullable = false, updatable = false)
     private String consultantCode;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "consultant", fetch = FetchType.LAZY)
+    private List<Positionnement> positionnements;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "consultant", fetch = FetchType.LAZY)
+    private List<CvEnvoyee> cvEnvoye;
+    
     public Consultant() {}
 
 	public Consultant(String prenom, String nom, String title, Date disponibilite, String statut, String mobilite,

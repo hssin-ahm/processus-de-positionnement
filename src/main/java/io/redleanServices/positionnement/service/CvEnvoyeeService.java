@@ -13,5 +13,6 @@ public interface CvEnvoyeeService {
 	List<CvEnvoyee> getAllCvEnvoyees();
 	CvEnvoyee updateCvEnvoyee(CvEnvoyee adv, Long idAd) ;
 	CvEnvoyee updateCvEnvoyee(CvEnvoyee p) ;
+	List<CvEnvoyee> getCvEnvoyeesByConsId(Long id);
 
 }

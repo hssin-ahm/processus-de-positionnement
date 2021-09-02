@@ -1,5 +1,6 @@
 package io.redleanServices.positionnement.controller;
 
+import java.util.Date;
 import java.util.List
 ;
 import java.util.Optional;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.redleanServices.positionnement.dao.CvEnvoyeeRepository;
+import io.redleanServices.positionnement.entity.Consultant;
+import io.redleanServices.positionnement.entity.CvEnvoyeContact;
 import io.redleanServices.positionnement.entity.CvEnvoyee;
+import io.redleanServices.positionnement.service.ConsultantServiceImpl;
 import io.redleanServices.positionnement.service.CvEnvoyeeSercicelmpl;
 
 @RestController
@@ -30,6 +34,8 @@ public class RestControlCvEnvoyee {
 	@Autowired 
 	CvEnvoyeeSercicelmpl cvEnvoyeeSercicelmpl;
 	
+	@Autowired 
+	ConsultantServiceImpl consultantService;
 
 
 	/*
@@ -37,21 +43,51 @@ public class RestControlCvEnvoyee {
 	 *  "dateEnvoi": null,
     "remarques": "bbb",
     "contact": null,
-    "partenairClient": null,
+    "partenairClient": null,  
     "statut": "nnn",
     "tjm": 0.0,
     "nomSociete": "v"*/
 	
-	//http://localhost:8081/SpringMVC/servlet/CvEnvoyee/ajouteCvEnvoyee
-	@PostMapping("/ajouteCvEnvoyee")
-	@ResponseBody
-	public CvEnvoyee saveContact(@RequestBody CvEnvoyee c)
-	{
-		cvEnvoyeeSercicelmpl.saveCvEnvoyee(c);
-		return c;
+	@PostMapping("/ajouteCvEnvoyee/{idConsultant}")
+	public CvEnvoyee saveCvEnvoyee(@RequestBody CvEnvoyeContact c, @PathVariable("idConsultant") Long idConsultant)
+	{	
+		CvEnvoyee cv = new CvEnvoyee();
+		cv.setDateEnvoi(c.getDateEnvoi());
+		cv.setNomSociete(c.getNomSociete());
+		cv.setPartenairClient(c.getPartenairClient());
+		cv.setRemarques(c.getRemarques());
+		cv.setStatut(c.getStatut());
+		cv.setTJM(c.getTJM());
+		Consultant consultant = consultantService.findEmployeeById(idConsultant);
+		cv.setConsultant(consultant);
+		cvEnvoyeeSercicelmpl.saveCvEnvoyee(cv);
+
+		cv.setManyContact(c.getContact());
+		cvEnvoyeeSercicelmpl.saveCvEnvoyee(cv);
+		return cv;
 	}
 	
-//http://localhost:8081/SpringMVC/servlet/CvEnvoyee/get-all-cvEnvoyees	
+	@PutMapping("/modifycv") 
+	 @ResponseBody 
+	 
+		public CvEnvoyee updateCvEnvoyee(@RequestBody CvEnvoyeContact c) 
+		{ 	 
+			CvEnvoyee cv = new CvEnvoyee();
+			cv.setIdcv(c.getIdcv());
+			cv.setDateEnvoi(c.getDateEnvoi());
+			cv.setNomSociete(c.getNomSociete());
+			cv.setPartenairClient(c.getPartenairClient());
+			cv.setRemarques(c.getRemarques());
+			cv.setStatut(c.getStatut());
+			cv.setTJM(c.getTJM());
+			cv.setConsultant(c.getConsultant());
+			cvEnvoyeeSercicelmpl.updateCvEnvoyee(cv);
+	
+			cv.setManyContact(c.getContact());
+			cvEnvoyeeSercicelmpl.updateCvEnvoyee(cv);
+			
+	  		return cv;
+	}
 	
 	@GetMapping("/get-all-cvEnvoyees") 
 	@ResponseBody 
@@ -62,7 +98,14 @@ public class RestControlCvEnvoyee {
 		 return list; 
 	} 
 	
-
+	@GetMapping("/getCvEnvoyeesByConsId/{id}") 
+	@ResponseBody 
+	
+	 public List<CvEnvoyee> getCvEnvoyeesByConsId(@PathVariable("id") Long id) { 
+		
+		 List<CvEnvoyee> list = cvEnvoyeeSercicelmpl.getCvEnvoyeesByConsId(id);
+		 return list; 
+	} 
 	
 
 	//http://localhost:8081/SpringMVC/servlet/CvEnvoyee/deleteCv/1
@@ -85,15 +128,7 @@ public class RestControlCvEnvoyee {
 }
 
 */
-//http://localhost:8081/SpringMVC/servlet/CvEnvoyee/modifycv
-	@PutMapping("/modifycv") 
-	 @ResponseBody 
-	 
-		public CvEnvoyee updateCvEnvoyee(@RequestBody CvEnvoyee c) 
-		{ 	 
-    	
-   		 return cvEnvoyeeSercicelmpl.updateCvEnvoyee(c);
- 	}
+	
 	
 	
 //http://localhost:8081/SpringMVC/servlet/CvEnvoyee/cvs/1

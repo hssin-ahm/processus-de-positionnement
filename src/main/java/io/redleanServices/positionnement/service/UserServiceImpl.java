@@ -1,6 +1,7 @@
 package io.redleanServices.positionnement.service;
 import io.redleanServices.positionnement.dao.RoleDao;
 import io.redleanServices.positionnement.dao.UserDao;
+import io.redleanServices.positionnement.entity.Consultant;
 import io.redleanServices.positionnement.entity.Role;
 import io.redleanServices.positionnement.entity.User;
 
@@ -124,5 +125,9 @@ public class UserServiceImpl implements IUserService{
 	public User getUserByUserName(String username) {
 		
 		return userDao.findByUserName(username);
+	}
+	@Override
+	public List<User> findConsultantParKey(String keyword) {
+		return userDao.cherchebyKeyWord(keyword); 
 	}
 }

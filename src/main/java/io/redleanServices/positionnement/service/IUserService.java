@@ -21,4 +21,6 @@ public interface IUserService {
 
 	User getUserByUserName(String username);
 
+	List<User> findConsultantParKey(String keyword);
+
 }
