@@ -2,6 +2,7 @@ package io.redleanServices.positionnement.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +15,7 @@ public class Contact  implements Serializable{
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long idContact;
+	@Column(length = 45, nullable = false, unique = true)
 	private String nom ;
 	private String prenom;
 	private String mail ;

@@ -71,7 +71,7 @@ public class RestControlCvEnvoyee {
 	 @ResponseBody 
 	 
 		public CvEnvoyee updateCvEnvoyee(@RequestBody CvEnvoyeContact c) 
-		{ 	 
+		{ 	
 			CvEnvoyee cv = new CvEnvoyee();
 			cv.setIdcv(c.getIdcv());
 			cv.setDateEnvoi(c.getDateEnvoi());
@@ -80,15 +80,15 @@ public class RestControlCvEnvoyee {
 			cv.setRemarques(c.getRemarques());
 			cv.setStatut(c.getStatut());
 			cv.setTJM(c.getTJM());
+			cv.setManyContact(c.getContact());
+			//Consultant consultant = consultantService.findEmployeeById(idConsultant);
 			cv.setConsultant(c.getConsultant());
 			cvEnvoyeeSercicelmpl.updateCvEnvoyee(cv);
 	
-			cv.setManyContact(c.getContact());
-			cvEnvoyeeSercicelmpl.updateCvEnvoyee(cv);
 			
 	  		return cv;
 	}
-	
+
 	@GetMapping("/get-all-cvEnvoyees") 
 	@ResponseBody 
 	
