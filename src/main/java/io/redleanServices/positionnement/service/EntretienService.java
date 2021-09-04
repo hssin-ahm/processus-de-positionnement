@@ -2,15 +2,15 @@ package io.redleanServices.positionnement.service;
 
 import java.util.List;
 
-import io.redleanServices.positionnement.entity.Entretien;
+import io.redleanServices.positionnement.entity.EntretienPartenaire;
 
 
 public interface EntretienService {
-	Entretien saveEntretien(Entretien e);
-		void deleteEntretien(Entretien e);
+	EntretienPartenaire saveEntretien(EntretienPartenaire e);
+		void deleteEntretien(EntretienPartenaire e);
 		void deleteEntretienById(Long id);
-		Entretien getEntretien(Long id);
-		List<Entretien> getAllEntretiens();
-		Entretien updateEntretien(Entretien adv, Long idAd) ;
-		Entretien updateEntretien(Entretien p) ;
+		EntretienPartenaire getEntretien(Long id);
+		List<EntretienPartenaire> getAllEntretiens();
+		EntretienPartenaire updateEntretien(EntretienPartenaire adv, Long idAd) ;
+		EntretienPartenaire updateEntretien(EntretienPartenaire p) ;
 }

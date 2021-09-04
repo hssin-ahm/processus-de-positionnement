@@ -31,7 +31,7 @@ public class CvEnvoyee implements Serializable {
 	private String remarques;
 	private String Statut;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "CVENVOYE_CONTACT",
             joinColumns = {
                     @JoinColumn(name = "CVENVOYE_ID")

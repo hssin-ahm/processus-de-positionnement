@@ -16,19 +16,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.redleanServices.positionnement.dao.EntretienRepository;
-import io.redleanServices.positionnement.entity.Entretien;
+import io.redleanServices.positionnement.entity.Consultant;
+import io.redleanServices.positionnement.entity.EntretienPartenaire;
+import io.redleanServices.positionnement.service.ConsultantServiceImpl;
 import io.redleanServices.positionnement.service.EntretienServicelmpl;
 
 @RestController
 @PreAuthorize("hasRole('Admin')")
 @RequestMapping("/entretien")
-public class RestControlEntretien {
+public class RestControlEntretienPartenaire {
 	@Autowired 
 	EntretienRepository entretienRepository;
 	
 	@Autowired 
 	EntretienServicelmpl entretienServicelmpl;
 	
+	@Autowired 
+	ConsultantServiceImpl consultantService;
 
 
 	
@@ -42,10 +46,12 @@ public class RestControlEntretien {
 }*/
 	//http://localhost:8081/SpringMVC/servlet/Entretien/ajouterEntretien
 
-	@PostMapping("/ajouterEntretien")
+	@PostMapping("/ajouterEntretien/{idConsultant}")
 	@ResponseBody
-	public Entretien saveEntretien(@RequestBody Entretien e)
+	public EntretienPartenaire saveEntretien(@RequestBody EntretienPartenaire e, @PathVariable("idConsultant") Long idConsultant)
 	{
+		//Consultant consultant = consultantService.findEmployeeById(idConsultant);
+		//e.set
 		entretienServicelmpl.saveEntretien(e);
 		return e;
 	}
@@ -56,9 +62,9 @@ public class RestControlEntretien {
 	@GetMapping("/get-all-Entretiens") 
 	@ResponseBody 
 	
-	 public List<Entretien> getAllEntretiens() { 
+	 public List<EntretienPartenaire> getAllEntretiens() { 
 		
-		 List<Entretien> list = entretienServicelmpl.getAllEntretiens();
+		 List<EntretienPartenaire> list = entretienServicelmpl.getAllEntretiens();
 		 return list; 
 	} 
 	
@@ -78,7 +84,7 @@ public class RestControlEntretien {
 	@PutMapping("/modifyidEntretien") 
 	 @ResponseBody 
 	 
-		public Entretien updateEntretien(@RequestBody Entretien e) 
+		public EntretienPartenaire updateEntretien(@RequestBody EntretienPartenaire e) 
 		{ 	 
     	
    		 return entretienServicelmpl.updateEntretien(e);
@@ -88,7 +94,7 @@ public class RestControlEntretien {
 
 	//http://localhost:8081/SpringMVC/servlet/Entretien/Contacts/1
 	   @GetMapping(value = "/Contacts/{idEntretien}")
-	    public Optional<Entretien> afficherUnEntretien(@PathVariable Long idEntretien) {
+	    public Optional<EntretienPartenaire> afficherUnEntretien(@PathVariable Long idEntretien) {
 	        return  entretienRepository.findById(idEntretien);
 	    }
 	   
@@ -98,7 +104,7 @@ public class RestControlEntretien {
 	    @GetMapping(value = "/contacts/{idEntretien}")
 	    @ResponseBody
 	 	
-	 	public Entretien findEntretien(@PathVariable("idEntretien") Long idEntretien)
+	 	public EntretienPartenaire findEntretien(@PathVariable("idEntretien") Long idEntretien)
 	 	     {
 	 			return entretienServicelmpl.getEntretien(idEntretien);
 	 		 }

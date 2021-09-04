@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.redleanServices.positionnement.dao.EntretienRepository;
-import io.redleanServices.positionnement.entity.Entretien;
+import io.redleanServices.positionnement.entity.EntretienPartenaire;
 
 @Service 
 public class EntretienServicelmpl  implements EntretienService{
@@ -15,12 +15,12 @@ public class EntretienServicelmpl  implements EntretienService{
 	EntretienRepository entretienRepository;
 	
 	@Override
-	public Entretien saveEntretien(Entretien e) {
+	public EntretienPartenaire saveEntretien(EntretienPartenaire e) {
 		return entretienRepository.save(e);
 	}
 
 	@Override
-	public void deleteEntretien(Entretien e) {
+	public void deleteEntretien(EntretienPartenaire e) {
 		 entretienRepository.delete(e);
 		
 	}
@@ -33,28 +33,28 @@ public class EntretienServicelmpl  implements EntretienService{
 	}
 
 	@Override
-	public Entretien getEntretien(Long id) {
+	public EntretienPartenaire getEntretien(Long id) {
 		return entretienRepository.findById(id).get();
 
 	}
 
 	@Override
-	public List<Entretien> getAllEntretiens() {
-		List<Entretien> Categorys =(List<Entretien>) entretienRepository.findAll();
-		for(Entretien Category:Categorys) {
+	public List<EntretienPartenaire> getAllEntretiens() {
+		List<EntretienPartenaire> Categorys =(List<EntretienPartenaire>) entretienRepository.findAll();
+		for(EntretienPartenaire Category:Categorys) {
 			System.out.println(Category);
 		}
 		return Categorys;
 	}
 
 	@Override
-	public Entretien updateEntretien(Entretien adv, Long idAd) {
-		Entretien a = adv;
+	public EntretienPartenaire updateEntretien(EntretienPartenaire adv, Long idAd) {
+		EntretienPartenaire a = adv;
 		return entretienRepository.save(a);
 	}
 
 	@Override
-	public Entretien updateEntretien(Entretien p) {
+	public EntretienPartenaire updateEntretien(EntretienPartenaire p) {
 		return entretienRepository.save(p);
 	}
 

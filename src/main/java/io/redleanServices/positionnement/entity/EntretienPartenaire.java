@@ -7,9 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Entretien implements Serializable  {
+public class EntretienPartenaire implements Serializable  {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long idEntretien;
@@ -19,12 +21,18 @@ public class Entretien implements Serializable  {
 	private String remarque;
 	private  float TJM ;
 	private String Statut;
-	public Entretien() {
+	
+	@ManyToOne
+	@JoinColumn(name = "consultant_id")
+	private Consultant consultant;
+	
+	public EntretienPartenaire() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Entretien(Long idEntretien, Date dateEntretien, String typeEntretien, String remarque, float tJM,
-			String statut) {
+	
+	public EntretienPartenaire(Long idEntretien, Date dateEntretien, String typeEntretien, String remarque, float tJM,
+			String statut, Consultant consultant) {
 		super();
 		this.idEntretien = idEntretien;
 		this.dateEntretien = dateEntretien;
@@ -32,7 +40,17 @@ public class Entretien implements Serializable  {
 		this.remarque = remarque;
 		TJM = tJM;
 		Statut = statut;
+		this.consultant = consultant;
 	}
+
+	public Consultant getConsultant() {
+		return consultant;
+	}
+
+	public void setConsultant(Consultant consultant) {
+		this.consultant = consultant;
+	}
+
 	public Long getIdEntretien() {
 		return idEntretien;
 	}
