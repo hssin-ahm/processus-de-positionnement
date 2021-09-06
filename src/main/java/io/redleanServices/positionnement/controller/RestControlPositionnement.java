@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.redleanServices.positionnement.dao.PositionnementRepository;
+import io.redleanServices.positionnement.entity.Consultant;
 import io.redleanServices.positionnement.entity.Positionnement;
+import io.redleanServices.positionnement.service.ConsultantServiceImpl;
 import io.redleanServices.positionnement.service.PositionnementServicelmpl;
 
 
@@ -28,6 +30,9 @@ public class RestControlPositionnement {
 	PositionnementRepository positionnementRepository;
 	@Autowired
 	PositionnementServicelmpl positionnementServicelmpl;
+	
+	@Autowired 
+	ConsultantServiceImpl consultantService;
 	/*
 {   
    
@@ -40,10 +45,12 @@ public class RestControlPositionnement {
 */
 	
 	//http://localhost:8081/SpringMVC/servlet/Positionnement/ajouterPositionnement
-		@PostMapping("/ajouterPositionnement")
+		@PostMapping("/ajouterPositionnement/{consultantId}")
 		@ResponseBody
-		public Positionnement savePositionnement(@RequestBody Positionnement e)
+		public Positionnement savePositionnement(@RequestBody Positionnement e, @PathVariable("consultantId") Long consultantId)
 		{
+			Consultant consultant = consultantService.findEmployeeById(consultantId);
+			e.setConsultant(consultant);
 			positionnementServicelmpl.savePositionnement(e);
 			return e;
 		}
@@ -99,5 +106,13 @@ public class RestControlPositionnement {
 		 	     {
 		 			return positionnementServicelmpl.getPositionnement(idPositionnement);
 		 		 }
-		    
+		  
+		    @GetMapping("/get-all-Positionnements/{consultantId}") 
+			@ResponseBody 
+			
+			 public List<Positionnement> getAllPositionnementByConsId(@PathVariable("consultantId") Long consultantId) { 
+				
+				 List<Positionnement> list = positionnementServicelmpl.getAllEntretiensByConsultantId(consultantId);
+				 return list; 
+			} 
 }

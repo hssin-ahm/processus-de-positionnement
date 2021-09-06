@@ -46,16 +46,24 @@ public class RestControlEntretienPartenaire {
 }*/
 	//http://localhost:8081/SpringMVC/servlet/Entretien/ajouterEntretien
 
-	@PostMapping("/ajouterEntretien/{idConsultant}")
+	@PostMapping("/ajouterEntretien")
 	@ResponseBody
-	public EntretienPartenaire saveEntretien(@RequestBody EntretienPartenaire e, @PathVariable("idConsultant") Long idConsultant)
+	public EntretienPartenaire saveEntretien(@RequestBody EntretienPartenaire e)
 	{
 		//Consultant consultant = consultantService.findEmployeeById(idConsultant);
 		//e.set
 		entretienServicelmpl.saveEntretien(e);
 		return e;
 	}
-	
+	@PostMapping("/ajouterEntretien/{consultantId}")
+	@ResponseBody
+	public EntretienPartenaire saveEntretienByConsId(@RequestBody EntretienPartenaire e, @PathVariable("consultantId") Long consultantId)
+	{
+		Consultant consultant = consultantService.findEmployeeById(consultantId);
+		e.setConsultant(consultant);
+		entretienServicelmpl.saveEntretien(e);
+		return e;
+	}
 	
 	
 	//http://localhost:8081/SpringMVC/servlet/Entretien/get-all-Entretiens
@@ -67,7 +75,14 @@ public class RestControlEntretienPartenaire {
 		 List<EntretienPartenaire> list = entretienServicelmpl.getAllEntretiens();
 		 return list; 
 	} 
+	@GetMapping("/get-all-Entretiens/{id}") 
+	@ResponseBody 
 	
+	 public List<EntretienPartenaire> getAllEntretiensByConsultantId(@PathVariable("id") Long id) { 
+		
+		 List<EntretienPartenaire> list = entretienServicelmpl.getAllEntretiensByConsultantId(id);
+		 return list; 
+	} 
 
 	
 //http://localhost:8081/SpringMVC/servlet/Entretien/deleteE/2

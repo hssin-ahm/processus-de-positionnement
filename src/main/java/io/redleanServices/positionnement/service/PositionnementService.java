@@ -15,4 +15,5 @@ public interface PositionnementService {
 	List<Positionnement> getAllPositionnements();
 	Positionnement updatePositionnement(Positionnement adv, Long idAd) ;
 	Positionnement updateBriefing(Positionnement p) ;
+	List<Positionnement> getAllEntretiensByConsultantId(Long consultantId);
 }

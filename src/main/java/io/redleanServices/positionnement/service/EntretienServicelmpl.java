@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.redleanServices.positionnement.dao.EntretienRepository;
+import io.redleanServices.positionnement.entity.CvEnvoyee;
 import io.redleanServices.positionnement.entity.EntretienPartenaire;
 
 @Service 
@@ -56,6 +57,11 @@ public class EntretienServicelmpl  implements EntretienService{
 	@Override
 	public EntretienPartenaire updateEntretien(EntretienPartenaire p) {
 		return entretienRepository.save(p);
+	}
+	
+	@Override
+	public List<EntretienPartenaire> getAllEntretiensByConsultantId(Long id) {
+		return entretienRepository.findAllByConsultantId(id);
 	}
 
 }

@@ -19,6 +19,7 @@ public class Positionnement implements Serializable {
 	private String nomDuClient;
 	private String SecteurActivite;
 	private String duredeLaMission; 
+	private String lieuDeLaMission;
 	private String intituleDuPoste; 
 	private String descriptifDeLaMission ;
 	private  float TJM ;
@@ -35,7 +36,7 @@ public class Positionnement implements Serializable {
 	
 	public Positionnement(Long idPositionnement, Date date, String nomDuClient, String secteurActivite,
 			String duredeLaMission, String intituleDuPoste, String descriptifDeLaMission, float tJM, String remarque,
-			Consultant consultant) {
+			Consultant consultant, String lieuDeLaMission) {
 		super();
 		this.idPositionnement = idPositionnement;
 		this.date = date;
@@ -47,6 +48,27 @@ public class Positionnement implements Serializable {
 		TJM = tJM;
 		this.remarque = remarque;
 		this.consultant = consultant;
+		this.lieuDeLaMission = lieuDeLaMission;
+	}
+
+
+	public String getLieuDeLaMission() {
+		return lieuDeLaMission;
+	}
+
+
+	public void setLieuDeLaMission(String lieuDeLaMission) {
+		this.lieuDeLaMission = lieuDeLaMission;
+	}
+
+
+	public String getRemarque() {
+		return remarque;
+	}
+
+
+	public void setRemarque(String remarque) {
+		this.remarque = remarque;
 	}
 
 

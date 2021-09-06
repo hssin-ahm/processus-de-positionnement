@@ -61,5 +61,9 @@ public class PositionnementServicelmpl  implements PositionnementService{
 		return positionnementRepository.save(p);
 
 	}
+	@Override
+	public List<Positionnement> getAllEntretiensByConsultantId(Long consultantId) {
+		return positionnementRepository.findAllByConsultantId(consultantId);
+	}
 
 }
