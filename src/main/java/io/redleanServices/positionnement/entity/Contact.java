@@ -17,6 +17,7 @@ public class Contact  implements Serializable{
 	private Long idContact;
 	@Column(length = 45, nullable = false, unique = true)
 	private String nom ;
+	@Column(length = 45, nullable = false, unique = true)
 	private String prenom;
 	private String mail ;
 	private String poste ;

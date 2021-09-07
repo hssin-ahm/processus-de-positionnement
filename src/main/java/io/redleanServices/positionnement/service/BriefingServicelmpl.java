@@ -62,5 +62,9 @@ public class BriefingServicelmpl  implements BriefingService{
 		return briefingRepository.save(p);
 
 	}
+	@Override
+	public List<Briefing> getBriefingsByConsId(Long id) {
+		return briefingRepository.findAllByConsultantId(id);
+	}
 
 }

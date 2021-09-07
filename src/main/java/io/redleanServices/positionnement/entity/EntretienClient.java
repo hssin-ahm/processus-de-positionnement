@@ -7,16 +7,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 @Entity
 public class EntretienClient implements Serializable  {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long idEntretienClient;
-	private String TypeEntretienClient;
-	private Date dateEntretienClient;
+	private String TypeEntretien;
+	private Date dateEntretien;
 	private float TJM;
 	private String remarque;
-	private Date duree;
+	private String nomDuClient;
+	private String lieu;
+	@ManyToOne
+	@JoinColumn(name = "consultant_id")
+	private Consultant consultant;
 	
 	public Long getIdEntretienClient() {
 		return idEntretienClient;
@@ -27,19 +33,19 @@ public class EntretienClient implements Serializable  {
 	}
 
 	public String getTypeEntretienClient() {
-		return TypeEntretienClient;
+		return TypeEntretien;
 	}
 
 	public void setTypeEntretienClient(String typeEntretienClient) {
-		TypeEntretienClient = typeEntretienClient;
+		TypeEntretien = typeEntretienClient;
 	}
 
 	public Date getDateEntretienClient() {
-		return dateEntretienClient;
+		return dateEntretien;
 	}
 
 	public void setDateEntretienClient(Date dateEntretienClient) {
-		this.dateEntretienClient = dateEntretienClient;
+		this.dateEntretien= dateEntretienClient;
 	}
 
 	public float getTJM() {
@@ -58,29 +64,52 @@ public class EntretienClient implements Serializable  {
 		this.remarque = remarque;
 	}
 
-	public Date getDuree() {
-		return duree;
-	}
-
-	public void setDuree(Date duree) {
-		this.duree = duree;
-	}
-
 	public EntretienClient() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
+	
+
+	public String getNomDuClient() {
+		return nomDuClient;
+	}
+
+	public void setNomDuClient(String nomDuClient) {
+		this.nomDuClient = nomDuClient;
+	}
+
 	public EntretienClient(Long idEntretienClient, String typeEntretienClient, Date dateEntretienClient, float tJM,
-			String remarque, Date duree) {
+			String remarque, String nomDuClient, String lieu, Consultant consultant) {
 		super();
 		this.idEntretienClient = idEntretienClient;
-		TypeEntretienClient = typeEntretienClient;
-		this.dateEntretienClient = dateEntretienClient;
+		TypeEntretien= typeEntretienClient;
+		this.dateEntretien= dateEntretienClient;
 		TJM = tJM;
 		this.remarque = remarque;
-		this.duree = duree;
+		this.nomDuClient = nomDuClient;
+		this.lieu = lieu;
+		this.consultant = consultant;
 	}
+
+	public String getLieu() {
+		return lieu;
+	}
+
+	public void setLieu(String lieu) {
+		this.lieu = lieu;
+	}
+
+	public Consultant getConsultant() {
+		return consultant;
+	}
+
+	public void setConsultant(Consultant consultant) {
+		this.consultant = consultant;
+	}
+
 	
 
 	

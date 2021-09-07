@@ -13,4 +13,5 @@ public interface BriefingService {
 	List<Briefing> getAllBriefings();
 	Briefing updateBriefing(Briefing adv, Long idAd) ;
 	Briefing updateBriefing(Briefing p) ;
+	List<Briefing> getBriefingsByConsId(Long id);
 }

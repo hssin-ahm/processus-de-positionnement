@@ -37,16 +37,6 @@ public class RestControlCvEnvoyee {
 	@Autowired 
 	ConsultantServiceImpl consultantService;
 
-
-	/*
-	 * 
-	 *  "dateEnvoi": null,
-    "remarques": "bbb",
-    "contact": null,
-    "partenairClient": null,  
-    "statut": "nnn",
-    "tjm": 0.0,
-    "nomSociete": "v"*/
 	
 	@PostMapping("/ajouteCvEnvoyee/{idConsultant}")
 	public CvEnvoyee saveCvEnvoyee(@RequestBody CvEnvoyeContact c, @PathVariable("idConsultant") Long idConsultant)
@@ -81,7 +71,6 @@ public class RestControlCvEnvoyee {
 			cv.setStatut(c.getStatut());
 			cv.setTJM(c.getTJM());
 			cv.setManyContact(c.getContact());
-			//Consultant consultant = consultantService.findEmployeeById(idConsultant);
 			cv.setConsultant(c.getConsultant());
 			cvEnvoyeeSercicelmpl.updateCvEnvoyee(cv);
 	
@@ -98,40 +87,24 @@ public class RestControlCvEnvoyee {
 		 return list; 
 	} 
 	
-	@GetMapping("/getCvEnvoyeesByConsId/{id}") 
+	@GetMapping("/getCvEnvoyeesByConsId/{id}")
 	@ResponseBody 
 	
 	 public List<CvEnvoyee> getCvEnvoyeesByConsId(@PathVariable("id") Long id) { 
-		
 		 List<CvEnvoyee> list = cvEnvoyeeSercicelmpl.getCvEnvoyeesByConsId(id);
 		 return list; 
 	} 
 	
 
-	//http://localhost:8081/SpringMVC/servlet/CvEnvoyee/deleteCv/1
 	@DeleteMapping("/deleteCv/{idcv}") 
 	@ResponseBody 
 	void deleteCvEnvoyeeById(@PathVariable("idcv") Long idcv){ 
 		cvEnvoyeeSercicelmpl.deleteCvEnvoyeeById(idcv);
 		}  
 
-
-	/*{   
-    "idcv": 1,
-    "dateEnvoi": null,
-    "remarques": "never forget",
-    "contact": null,
-    "partenairClient": null,
-    "statut": "nnn",
-    "tjm": 0.0,
-    "nomSociete": "v"
-}
-
-*/
+ 
 	
 	
-	
-//http://localhost:8081/SpringMVC/servlet/CvEnvoyee/cvs/1
 	   @GetMapping(value = "/cvs/{idcv}")
 	    public Optional<CvEnvoyee> afficherUnCvEnvoyee(@PathVariable Long idcv) {
 	        return  cvEnvoyeeRepository.findById(idcv);

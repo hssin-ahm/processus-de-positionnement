@@ -3,6 +3,7 @@ package io.redleanServices.positionnement.service;
 import java.util.List;
 
 import io.redleanServices.positionnement.entity.EntretienClient;
+import io.redleanServices.positionnement.entity.EntretienPartenaire;
 
 
 public interface EntretienClientService {
@@ -13,4 +14,5 @@ public interface EntretienClientService {
 	List<EntretienClient> getAllEntretienClients();
 	EntretienClient updateEntretienClient(EntretienClient adv, Long idAd) ;
 	EntretienClient updateEntretienClient(EntretienClient p) ;
+	List<EntretienClient> getAllEntretiensByConsultantId(Long id);
 }

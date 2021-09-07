@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import io.redleanServices.positionnement.dao.EntretienClientRepository;
 import io.redleanServices.positionnement.entity.EntretienClient;
+import io.redleanServices.positionnement.entity.EntretienPartenaire;
 
 
 
@@ -62,6 +63,11 @@ public class EntretienClientServicelmpl  implements EntretienClientService{
 	public EntretienClient updateEntretienClient(EntretienClient p) {
 		return entretienClientRepository.save(p);
 
+	}
+
+	@Override
+	public List<EntretienClient> getAllEntretiensByConsultantId(Long id) {
+		return entretienClientRepository.findAllByConsultantId(id);
 	}
 
 }

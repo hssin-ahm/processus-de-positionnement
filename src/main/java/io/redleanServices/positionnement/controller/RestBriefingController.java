@@ -15,7 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.redleanServices.positionnement.dao.BriefingRepository;
 import io.redleanServices.positionnement.entity.Briefing;
+import io.redleanServices.positionnement.entity.Consultant;
+import io.redleanServices.positionnement.entity.CvEnvoyeContact;
+import io.redleanServices.positionnement.entity.CvEnvoyee;
 import io.redleanServices.positionnement.service.BriefingServicelmpl;
+import io.redleanServices.positionnement.service.ConsultantServiceImpl;
+import io.redleanServices.positionnement.service.CvEnvoyeeSercicelmpl;
 
 
 @RestController
@@ -27,29 +32,50 @@ public class RestBriefingController {
 	
 	@Autowired 
 	BriefingServicelmpl briefingServicelmpl;
-	/*
-	 * {
-   
-        "dateBriefing": "2021-08-05T00:00:00.000+00:00",
-        "lieu": "dua",
-        "remarque": "nn",
-        "contact": "25",
-        "duree": "2021-08-05T00:00:00.000+00:00"
-
-}*/
-
-//http://localhost:8081/SpringMVC/servlet/Briefing/ajouterBriefing
-	@PostMapping("/ajouterBriefing")
+	 
+	@Autowired 
+	ConsultantServiceImpl consultantService;
+	
+	@PostMapping("/ajouterBriefing/{idConsultant}")
 	@ResponseBody
-	public Briefing saveBriefing(@RequestBody Briefing b)
-	{
+	public Briefing saveBriefing(@RequestBody Briefing c, @PathVariable("idConsultant") Long idConsultant)
+	{	
+		Briefing b = new Briefing();
+		b.setDateBriefing(c.getDateBriefing());
+		b.setRemarque(c.getRemarque());
+		b.setType(c.getType());
+		b.setDure(c.getDure());
+		
+		Consultant consultant = consultantService.findEmployeeById(idConsultant);
+		b.setConsultant(consultant);
+		briefingServicelmpl.saveBriefing(b);
+
+		b.setManyContact(c.getContact());
 		briefingServicelmpl.saveBriefing(b);
 		return b;
 	}
 	
+	@PutMapping("/modifyidBriefing") 
+	@ResponseBody 
+	 
+	public Briefing updateCvEnvoyee(@RequestBody Briefing c) 
+	{ 	
+		Briefing b = new Briefing();
+		b.setIdBriefing(c.getIdBriefing());
+		b.setDateBriefing(c.getDateBriefing());
+		b.setRemarque(c.getRemarque());
+		b.setType(c.getType());
+		b.setDure(c.getDure());
+		
+		b.setManyContact(c.getContact());
+		//Consultant consultant = consultantService.findEmployeeById(idConsultant);
+		b.setConsultant(c.getConsultant());
+		briefingServicelmpl.updateBriefing(b);
+
+		
+  		return b;
+}
 	
-	
-//http://localhost:8081/SpringMVC/servlet/Briefing/get-all-Briefings
 	@GetMapping("/get-all-Briefings") 
 	@ResponseBody 
 	
@@ -62,38 +88,23 @@ public class RestBriefingController {
 
 	
 
-	//http://localhost:8081/SpringMVC/servlet/Briefing/deleteC/2
 	@DeleteMapping("/deleteC/{idBriefing}") 
 	@ResponseBody 
 	void deleteidBriefingById(@PathVariable("idBriefing") Long idBriefing){ 
 		briefingServicelmpl.deleteBriefingById(idBriefing);
 		}  
 
-/*
-{
-   "idBriefing":1,
-        "dateBriefing": "2021-08-05T00:00:00.000+00:00",
-        "lieu": "dua",
-        "remarque": "lipa",
-        "contact": "25",
-        "duree": "2021-08-05T00:00:00.000+00:00"
-
-}
- * */
+ 
+	@GetMapping("/getBriefingsByConsId/{id}") 
+	@ResponseBody 
 	
-
-//http://localhost:8081/SpringMVC/servlet/Briefing/modifyidBriefing
-	@PutMapping("/modifyidBriefing") 
-	 @ResponseBody 
-	 
-		public Briefing updateProduit(@RequestBody Briefing b) 
-		{ 	 
-    	
-   		 return briefingServicelmpl.updateBriefing(b);
- 	}
+	 public List<Briefing> getBriefingsByConsId(@PathVariable("id") Long id) { 
+		
+		 List<Briefing> list = briefingServicelmpl.getBriefingsByConsId(id);
+		 return list; 
+	} 
 	
 	
-//http://localhost:8081/SpringMVC/servlet/Briefing/Briefings/1
 	   @GetMapping(value = "/Briefings/{idBriefing}")
 	    public Optional<Briefing> afficherUnBriefing(@PathVariable Long idBriefing) {
 	        return  briefingRepository.findById(idBriefing);

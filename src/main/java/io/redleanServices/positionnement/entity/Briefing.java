@@ -3,11 +3,17 @@ package io.redleanServices.positionnement.entity;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -16,25 +22,60 @@ public class Briefing implements Serializable {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long idBriefing;
 	private Date dateBriefing;
-	private String lieu;
-    @ManyToOne()
-	private Contact   contact ;
+	private String type;
+	private String dure;
 	private  String remarque;
-    private String Statut;
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "BRIEFING_CONTACT",
+            joinColumns = {
+                    @JoinColumn(name = "BRIEFING_ID")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "CONTACT_ID")
+            }
+    )
+    private Set<Contact> contact = new HashSet<>();
+    
+    @ManyToOne
+	@JoinColumn(name = "consultant_id")
+	private Consultant consultant;
+    
 	public Briefing() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Briefing(Long idBriefing, Date dateBriefing, String lieu, Contact contact,
-			String remarque, String statut) {
+	
+	
+
+	public Briefing(Long idBriefing, Date dateBriefing, String type, String dure, String remarque, Set<Contact> contact,
+			Consultant consultant) {
 		super();
 		this.idBriefing = idBriefing;
 		this.dateBriefing = dateBriefing;
-		this.lieu = lieu;
-		this.contact = contact;
+		this.type = type;
+		this.dure = dure;
 		this.remarque = remarque;
-		Statut = statut;
+		this.contact = contact;
+		this.consultant = consultant;
 	}
+
+
+	public void setManyContact(Set<Contact> contact) {
+		this.contact = contact;
+	}
+	public Consultant getConsultant() {
+		return consultant;
+	}
+
+	public void setConsultant(Consultant consultant) {
+		this.consultant = consultant;
+	}
+
+	public void setContact(Set<Contact> contact) {
+		this.contact = contact;
+	}
+
 	public Long getIdBriefing() {
 		return idBriefing;
 	}
@@ -47,30 +88,35 @@ public class Briefing implements Serializable {
 	public void setDateBriefing(Date dateBriefing) {
 		this.dateBriefing = dateBriefing;
 	}
-	public String getLieu() {
-		return lieu;
+	
+	
+	public String getType() {
+		return type;
 	}
-	public void setLieu(String lieu) {
-		this.lieu = lieu;
+
+	public void setType(String type) {
+		this.type = type;
 	}
-	public Contact getContact() {
+
+	public String getDure() {
+		return dure;
+	}
+
+	public void setDure(String dure) {
+		this.dure = dure;
+	}
+
+	public Set<Contact> getContact() {
 		return contact;
 	}
-	public void setContact(Contact contact) {
-		this.contact = contact;
-	}
+
 	public String getRemarque() {
 		return remarque;
 	}
 	public void setRemarque(String remarque) {
 		this.remarque = remarque;
 	}
-	public String getStatut() {
-		return Statut;
-	}
-	public void setStatut(String statut) {
-		Statut = statut;
-	}
+	
     
 	  
 	

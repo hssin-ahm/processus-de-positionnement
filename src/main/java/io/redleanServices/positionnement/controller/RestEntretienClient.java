@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.redleanServices.positionnement.dao.EntretienClientRepository;
+import io.redleanServices.positionnement.entity.Consultant;
 import io.redleanServices.positionnement.entity.EntretienClient;
+import io.redleanServices.positionnement.entity.EntretienPartenaire;
+import io.redleanServices.positionnement.service.ConsultantServiceImpl;
 import io.redleanServices.positionnement.service.EntretienClientServicelmpl;
 
 
@@ -29,30 +32,20 @@ public class RestEntretienClient {
 	
 	@Autowired 
 	EntretienClientServicelmpl entretienClientServicelmpl;
-	
-
-/*
-{
-
-    "dateEntretienClient": null,
-    "remarque": "zerth",
-    "duree": null,
-    "typeEntretienClient": "nn",
-    "tjm": 1.0
-
-}
-*/
-//http://localhost:8081/SpringMVC/servlet/EntretienClient/ajouterEntretienClient
-	@PostMapping("/ajouterEntretienClient")
+	@Autowired 
+	ConsultantServiceImpl consultantService;
+ 
+	@PostMapping("/ajouterEntretienClient/{consultantId}")
 	@ResponseBody
-	public EntretienClient saveEntretienClient(@RequestBody EntretienClient ec)
+	public EntretienClient saveEntretienClient(@RequestBody EntretienClient ec, @PathVariable("consultantId") Long consultantId)
 	{
+		Consultant consultant = consultantService.findEmployeeById(consultantId);
+		ec.setConsultant(consultant);
 		entretienClientServicelmpl.saveEntretienClient(ec);
 		return ec;
 	}
 	
 	
-//http://localhost:8081/SpringMVC/servlet/EntretienClient/get-all-EntretienClients
 	@GetMapping("/get-all-EntretienClients") 
 	@ResponseBody 
 	
@@ -62,10 +55,16 @@ public class RestEntretienClient {
 		 return list; 
 	} 
 	
-
+	@GetMapping("/get-all-Entretiens/{id}") 
+	@ResponseBody 
+	
+	 public List<EntretienClient> getAllEntretiensByConsultantId(@PathVariable("id") Long id) { 
+		
+		 List<EntretienClient> list = entretienClientServicelmpl.getAllEntretiensByConsultantId(id);
+		 return list; 
+	} 
 	
 
-	//http://localhost:8081/SpringMVC/servlet/EntretienClient/deleteEc/2
 	@DeleteMapping("/deleteEc/{idEntretienClient}") 
 	@ResponseBody 
 	void deleteEntretienClientById(@PathVariable("idEntretienClient") Long idEntretienClient){ 
@@ -75,7 +74,6 @@ public class RestEntretienClient {
 
 	
 
-//http://localhost:8081/SpringMVC/servlet/EntretienClient/modifyididEntretienClient
 	@PutMapping("/modifyididEntretienClient") 
 	 @ResponseBody 
 	 
