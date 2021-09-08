@@ -40,6 +40,12 @@ public class Consultant implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "consultant", fetch = FetchType.LAZY)
     private List<EntretienClient> entretienClients;
     
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "consultant", fetch = FetchType.LAZY)
+    private List<TestTechniqueClient> testTechniqueClient;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "consultant", fetch = FetchType.LAZY)
+    private List<Validation> validations;
+    
     public Consultant() {}
 
 	public Consultant(String prenom, String nom, String title, Date disponibilite, String statut, String mobilite,

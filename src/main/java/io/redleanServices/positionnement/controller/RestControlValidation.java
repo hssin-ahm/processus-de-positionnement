@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.redleanServices.positionnement.service.ConsultantServiceImpl;
 import io.redleanServices.positionnement.service.ValidationServiceImpl;
 import io.redleanServices.positionnement.dao.ValidationRepository;
+import io.redleanServices.positionnement.entity.Consultant;
+import io.redleanServices.positionnement.entity.Positionnement;
 import io.redleanServices.positionnement.entity.Validation;
 
 @RestController
@@ -29,13 +32,20 @@ public class RestControlValidation {
 	
 	@Autowired 
 	ValidationServiceImpl validationServiceImpl;
-	/*
-	{ "feedback": "ey",
-    "mesuresTeletravail": "lo",
-    "demarrageMission": "u"}
-    */
-
-//http://localhost:8081/SpringMVC/servlet/Validation/ajouterValidation
+	
+	@Autowired 
+	ConsultantServiceImpl consultantService;
+	
+	@PostMapping("/ajouterPositionnement/{consultantId}")
+	@ResponseBody
+	public Validation savePositionnement(@RequestBody Validation e, @PathVariable("consultantId") Long consultantId)
+	{
+		Consultant consultant = consultantService.findEmployeeById(consultantId);
+		e.setConsultant(consultant);
+		validationServiceImpl.saveValidation(e);
+		return e;
+	}
+	
 	@PostMapping("/ajouterValidation")
 	@ResponseBody
 	public Validation saveValidation(@RequestBody Validation ec)
@@ -44,7 +54,6 @@ public class RestControlValidation {
 		return ec;
 	}
 	
-	//http://localhost:8081/SpringMVC/servlet/Validation/get-all-validations
 	@GetMapping("/get-all-validations") 
 	@ResponseBody 
 	
@@ -53,10 +62,16 @@ public class RestControlValidation {
 		 List<Validation> list = validationServiceImpl.getAllValidations();
 		 return list; 
 	} 
+	@GetMapping("/get-all-validations/{consultantId}") 
+	@ResponseBody 
 	
+	 public List<Validation> getAllPositionnementByConsId(@PathVariable("consultantId") Long consultantId) { 
+		
+		 List<Validation> list = validationServiceImpl.getAllEntretiensByConsultantId(consultantId);
+		 return list; 
+	} 
 
 	
-//http://localhost:8081/SpringMVC/servlet/Validation//deleteV/2s
 	@DeleteMapping("/deleteV/{idValidation}") 
 	@ResponseBody 
 	void deleteValidationById(@PathVariable("idValidation") Long idValidation){ 
@@ -65,7 +80,6 @@ public class RestControlValidation {
 
 
 	
-//http://localhost:8081/SpringMVC/servlet/Validation/modifyididValidation
 	@PutMapping("/modifyididValidation") 
 	 @ResponseBody 
 	 
@@ -76,29 +90,12 @@ public class RestControlValidation {
  	}
 	
 
-//http://localhost:8081/SpringMVC/servlet/Validation/idValidations/1
 	   @GetMapping(value = "/idValidations/{idValidation}")
 	    public Optional<Validation> afficherUnValidation(@PathVariable Long idValidation) {
 	        return ValidationRepository.findById(idValidation);
 	    }
 	   
 
-	    
-/*
-
-	    @GetMapping(value = "/EntretienClients/{idEntretienClient}")
-	    @ResponseBody
-	 	
-	 	public EntretienClient findproduct (@PathVariable("idEntretienClient") Long idEntretienClient)
-	 	     {
-	 			return entretienClientServicelmpl.getEntretienClient(idEntretienClient);
-	 		 }
-	    
-	    
-
-	    
-	   
-*/
 
 
 }

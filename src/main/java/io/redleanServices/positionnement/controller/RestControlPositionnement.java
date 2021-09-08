@@ -33,18 +33,6 @@ public class RestControlPositionnement {
 	
 	@Autowired 
 	ConsultantServiceImpl consultantService;
-	/*
-{   
-   
-    "dateEntretien": null,
-    "remarque": "fv ",
-    "statut": "ee",
-    "typeEntretien": "eee",
-    "tjm": 0.0
-}
-*/
-	
-	//http://localhost:8081/SpringMVC/servlet/Positionnement/ajouterPositionnement
 		@PostMapping("/ajouterPositionnement/{consultantId}")
 		@ResponseBody
 		public Positionnement savePositionnement(@RequestBody Positionnement e, @PathVariable("consultantId") Long consultantId)
@@ -55,7 +43,6 @@ public class RestControlPositionnement {
 			return e;
 		}
 		
-		//http://localhost:8081/SpringMVC/servlet/Positionnement/get-all-Positionnements
 		@GetMapping("/get-all-Positionnements") 
 		@ResponseBody 
 		
@@ -66,22 +53,11 @@ public class RestControlPositionnement {
 		} 
 		
 
-	//http://localhost:8081/SpringMVC/servlet/Positionnement/deletep/2	
 		@DeleteMapping("/deletep/{idPositionnement}") 
 		@ResponseBody 
 		void deleteidPositionnementtById(@PathVariable("idPositionnement") Long idPositionnement){ 
 			positionnementServicelmpl.deletePositionnementById(idPositionnement);
 			}  
-/*
-{   
-    "idPositionnement": 1,
-    "dateEntretien": null,
-    "remarque": "fv ",
-    "statut": "ee",
-    "typeEntretien": "eee",
-    "tjm": 0.0
-}*/
-//http://localhost:8081/SpringMVC/servlet/Positionnement/modifyidPositionnement
 		@PutMapping("/modifyidPositionnement") 
 		 @ResponseBody 
 		 
@@ -91,7 +67,6 @@ public class RestControlPositionnement {
 	   		 return positionnementServicelmpl.updateBriefing(e);
 	 	}
 		
-		//http://localhost:8081/SpringMVC/servlet/Positionnement/Positionnements/1
 		   @GetMapping(value = "/Positionnements/{idPositionnement}")
 		    public Optional<Positionnement> afficherUnPositionnement(@PathVariable Long idPositionnement) {
 		        return  positionnementRepository.findById(idPositionnement);

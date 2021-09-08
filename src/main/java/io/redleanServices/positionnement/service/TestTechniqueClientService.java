@@ -14,4 +14,5 @@ public interface TestTechniqueClientService {
 	List<TestTechniqueClient> getAllTestTechniqueClients();
 	TestTechniqueClient updateTestTechniqueClient(TestTechniqueClient adv, Long idAd) ;
 	TestTechniqueClient updateEntretien(TestTechniqueClient p) ;
+	List<TestTechniqueClient> getAllEntretiensByConsultantId(Long id);
 }

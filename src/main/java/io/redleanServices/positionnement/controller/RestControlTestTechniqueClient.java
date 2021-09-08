@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.redleanServices.positionnement.dao.TestTechniqueClientRepository;
+import io.redleanServices.positionnement.entity.Consultant;
+import io.redleanServices.positionnement.entity.EntretienPartenaire;
 import io.redleanServices.positionnement.entity.TestTechniqueClient;
+import io.redleanServices.positionnement.service.ConsultantServiceImpl;
 import io.redleanServices.positionnement.service.TestTechniqueClientServicelmpl;
 
 @RestController
@@ -28,17 +31,9 @@ public class RestControlTestTechniqueClient {
 	@Autowired 
 	TestTechniqueClientServicelmpl testTechniqueClientServicelmpl;
 	
-/*
-{
- "dateEntretien": null,
-    "duree": null,
-    "observations": "gb ",
-
-    "typeEntretien": "rfgb"
-
-}
-*/
-	//http://localhost:8081/SpringMVC/servlet/TestTechniqueClient/ajouterTestTechniqueClient
+	@Autowired 
+	ConsultantServiceImpl consultantService;
+	
 	@PostMapping("/ajouterTestTechniqueClient")
 	@ResponseBody
 	public TestTechniqueClient saveTestTechniqueClient(@RequestBody TestTechniqueClient e)
@@ -46,9 +41,16 @@ public class RestControlTestTechniqueClient {
 		testTechniqueClientServicelmpl.saveTestTechniqueClient(e);
 		return e;
 	}
+	@PostMapping("/ajouterTestTechniqueClient/{consultantId}")
+	@ResponseBody
+	public TestTechniqueClient saveEntretienByConsId(@RequestBody TestTechniqueClient e, @PathVariable("consultantId") Long consultantId)
+	{
+		Consultant consultant = consultantService.findEmployeeById(consultantId);
+		e.setConsultant(consultant);
+		testTechniqueClientServicelmpl.saveTestTechniqueClient(e);
+		return e;
+	}
 	
-	
-	//http://localhost:8081/SpringMVC/servlet/TestTechniqueClient/get-all-TestTechniqueClients
 	@GetMapping("/get-all-TestTechniqueClients") 
 	@ResponseBody 
 	
@@ -58,26 +60,20 @@ public class RestControlTestTechniqueClient {
 		 return list; 
 	} 
 	
-
+	@GetMapping("/get-all-TestTechniqueClients/{id}") 
+	@ResponseBody 
 	
-	//http://localhost:8081/SpringMVC/servlet/TestTechniqueClient/deleteT/2
+	 public List<TestTechniqueClient> getAllEntretiensByConsultantId(@PathVariable("id") Long id) { 
+		
+		 List<TestTechniqueClient> list = testTechniqueClientServicelmpl.getAllEntretiensByConsultantId(id);
+		 return list; 
+	} 
+	
 	@DeleteMapping("/deleteT/{idTestTechniqueClient}") 
 	@ResponseBody 
 	void deleteidTestTechniqueClientById(@PathVariable("idTestTechniqueClient") Long idTestTechniqueClient){ 
 		testTechniqueClientServicelmpl.deleteTestTechniqueClientById(idTestTechniqueClient);
 		}  
-
-/*
-{
- "dateEntretien": null,
-    "duree": null,
-    "observations": null,
-    "testTechniqueClient": 1,
-    "typeEntretien": "telephone"
-
-}
-*/
-	//http://localhost:8081/SpringMVC/servlet/TestTechniqueClient/modifyidTestTechniqueClient
 	
 	@PutMapping("/modifyidTestTechniqueClient") 
 	 @ResponseBody 
@@ -89,7 +85,6 @@ public class RestControlTestTechniqueClient {
  	}
 	
 	
-//http://localhost:8081/SpringMVC/servlet/TestTechniqueClient/idTestTechniqueClients/3
 	   @GetMapping(value = "/idTestTechniqueClients/{idTestTechniqueClient}")
 	    public Optional<TestTechniqueClient> afficherUnTestTechniqueClient(@PathVariable Long idTestTechniqueClient) {
 	        return  testTechniqueClientRepository.findById(idTestTechniqueClient);

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.redleanServices.positionnement.dao.TestTechniqueClientRepository;
+import io.redleanServices.positionnement.entity.EntretienPartenaire;
 import io.redleanServices.positionnement.entity.TestTechniqueClient;
 
 
@@ -63,6 +64,10 @@ public class TestTechniqueClientServicelmpl  implements TestTechniqueClientServi
 	public TestTechniqueClient updateEntretien(TestTechniqueClient p) {
 		return testTechniqueClientRepository.save(p);
 
+	}
+	@Override
+	public List<TestTechniqueClient> getAllEntretiensByConsultantId(Long id) {
+		return testTechniqueClientRepository.findAllByConsultantId(id);
 	}
 
 }

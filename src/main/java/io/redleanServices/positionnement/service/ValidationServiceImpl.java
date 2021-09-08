@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.redleanServices.positionnement.dao.ValidationRepository;
+import io.redleanServices.positionnement.entity.Positionnement;
 import io.redleanServices.positionnement.entity.Validation;
 
 @Service 
@@ -57,6 +58,10 @@ public class ValidationServiceImpl implements ValidationService{
 	public Validation updateValidation(Validation p) {
 		return validationRepository.save(p);
 
+	}
+	@Override
+	public List<Validation> getAllEntretiensByConsultantId(Long consultantId) {
+		return validationRepository.findAllByConsultantId(consultantId);
 	}
 
 }
