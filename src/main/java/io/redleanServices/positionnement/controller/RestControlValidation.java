@@ -36,7 +36,7 @@ public class RestControlValidation {
 	@Autowired 
 	ConsultantServiceImpl consultantService;
 	
-	@PostMapping("/ajouterPositionnement/{consultantId}")
+	@PostMapping("/ajouterValidation/{consultantId}")
 	@ResponseBody
 	public Validation savePositionnement(@RequestBody Validation e, @PathVariable("consultantId") Long consultantId)
 	{
