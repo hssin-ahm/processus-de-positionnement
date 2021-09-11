@@ -4,6 +4,7 @@ import java.util.List;
 
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.redleanServices.positionnement.dao.CvEnvoyeeRepository;
 import io.redleanServices.positionnement.dao.EntretienRepository;
 import io.redleanServices.positionnement.entity.Consultant;
+import io.redleanServices.positionnement.entity.CvEnvoyee;
 import io.redleanServices.positionnement.entity.EntretienPartenaire;
 import io.redleanServices.positionnement.service.ConsultantServiceImpl;
+import io.redleanServices.positionnement.service.CvEnvoyeeSercicelmpl;
 import io.redleanServices.positionnement.service.EntretienServicelmpl;
 
 @RestController
@@ -34,24 +38,17 @@ public class RestControlEntretienPartenaire {
 	@Autowired 
 	ConsultantServiceImpl consultantService;
 
+	@Autowired 
+	CvEnvoyeeSercicelmpl cvEnvoyeeSercicelmpl;
 
-	
-	/*
-	 * {
-    
-    "typeEntretien": "nesr",
-    "remarque": "ee",
-    "dateEntretien":null,
-    "tjm": 22
-}*/
-	//http://localhost:8081/SpringMVC/servlet/Entretien/ajouterEntretien
-
+	@Autowired 
+	CvEnvoyeeRepository cvEnvoyeeRepository;
+ 
 	@PostMapping("/ajouterEntretien")
 	@ResponseBody
 	public EntretienPartenaire saveEntretien(@RequestBody EntretienPartenaire e)
 	{
-		//Consultant consultant = consultantService.findEmployeeById(idConsultant);
-		//e.set
+	 
 		entretienServicelmpl.saveEntretien(e);
 		return e;
 	}
@@ -66,7 +63,6 @@ public class RestControlEntretienPartenaire {
 	}
 	
 	
-	//http://localhost:8081/SpringMVC/servlet/Entretien/get-all-Entretiens
 	@GetMapping("/get-all-Entretiens") 
 	@ResponseBody 
 	
@@ -75,6 +71,28 @@ public class RestControlEntretienPartenaire {
 		 List<EntretienPartenaire> list = entretienServicelmpl.getAllEntretiens();
 		 return list; 
 	} 
+	
+	@GetMapping("/getEntretienByCvId/{id}") 
+	@ResponseBody 
+	
+	 public EntretienPartenaire getAllEntretiensByCvId(@PathVariable("id") Long id) { 
+		
+		 EntretienPartenaire entretienPartenaire = entretienServicelmpl.getAllEntretiensByCvId(id);
+		 Optional<CvEnvoyee> cvEnvoyee = cvEnvoyeeRepository.findById(id);
+		 CvEnvoyee cvEnv = new CvEnvoyee();
+		 cvEnv.setIdcv(cvEnvoyee.get().getIdcv());
+		 cvEnv.setConsultant(cvEnvoyee.get().getConsultant());
+		 cvEnv.setContact(cvEnvoyee.get().getContact());
+		 cvEnv.setDateEnvoi(cvEnvoyee.get().getDateEnvoi());
+		 cvEnv.setPartenairClient(cvEnvoyee.get().getPartenairClient());
+		 cvEnv.setRemarques(cvEnvoyee.get().getRemarques());
+		 cvEnv.setStatut(cvEnvoyee.get().getStatut());
+		 cvEnv.setNomSociete(cvEnvoyee.get().getNomSociete());
+		 cvEnv.setTJM(cvEnvoyee.get().getTJM());
+		 entretienPartenaire.setCvEnvoyee(cvEnv);
+		 return entretienPartenaire; 
+	} 
+	
 	@GetMapping("/get-all-Entretiens/{id}") 
 	@ResponseBody 
 	
@@ -85,7 +103,6 @@ public class RestControlEntretienPartenaire {
 	} 
 
 	
-//http://localhost:8081/SpringMVC/servlet/Entretien/deleteE/2
 	
 	@DeleteMapping("/deleteE/{idEntretien}") 
 	@ResponseBody 
@@ -95,19 +112,30 @@ public class RestControlEntretienPartenaire {
 
 
 	
-//http://localhost:8081/SpringMVC/servlet/Entretien/modifyidEntretien
-	@PutMapping("/modifyidEntretien") 
+	@PutMapping(value = "/modifyidEntretien/{id}") 
 	 @ResponseBody 
 	 
-		public EntretienPartenaire updateEntretien(@RequestBody EntretienPartenaire e) 
+		public EntretienPartenaire updateEntretien(@RequestBody EntretienPartenaire e, @PathVariable("id") Long id) 
 		{ 	 
-    	
-   		 return entretienServicelmpl.updateEntretien(e);
- 	}
+		Optional<CvEnvoyee> cvEnvoyee = cvEnvoyeeRepository.findById(id);
+		 CvEnvoyee cvEnv = new CvEnvoyee();
+		 cvEnv.setIdcv(cvEnvoyee.get().getIdcv());
+		 cvEnv.setConsultant(cvEnvoyee.get().getConsultant());
+		 cvEnv.setContact(cvEnvoyee.get().getContact());
+		 cvEnv.setDateEnvoi(cvEnvoyee.get().getDateEnvoi());
+		 cvEnv.setPartenairClient(cvEnvoyee.get().getPartenairClient());
+		 cvEnv.setRemarques(cvEnvoyee.get().getRemarques());
+		 cvEnv.setStatut(cvEnvoyee.get().getStatut());
+		 cvEnv.setNomSociete(cvEnvoyee.get().getNomSociete());
+		 cvEnv.setTJM(cvEnvoyee.get().getTJM());
+		 e.setCvEnvoyee(cvEnv);
+		e.setCvEnvoyee(cvEnvoyee.get());
+	 	//entretienServicelmpl.updateEntretien(e);
+	 	return e;
+		}
 	
 	
 
-	//http://localhost:8081/SpringMVC/servlet/Entretien/Contacts/1
 	   @GetMapping(value = "/Contacts/{idEntretien}")
 	    public Optional<EntretienPartenaire> afficherUnEntretien(@PathVariable Long idEntretien) {
 	        return  entretienRepository.findById(idEntretien);
@@ -115,7 +143,6 @@ public class RestControlEntretienPartenaire {
 	   
 
 	    
-//http://localhost:8081/SpringMVC/servlet/Entretien/contacts/1
 	    @GetMapping(value = "/contacts/{idEntretien}")
 	    @ResponseBody
 	 	

@@ -15,4 +15,5 @@ public interface EntretienService {
 		EntretienPartenaire updateEntretien(EntretienPartenaire adv, Long idAd) ;
 		EntretienPartenaire updateEntretien(EntretienPartenaire p) ;
 		List<EntretienPartenaire> getAllEntretiensByConsultantId(Long id);
+		EntretienPartenaire getAllEntretiensByCvId(Long id);
 }

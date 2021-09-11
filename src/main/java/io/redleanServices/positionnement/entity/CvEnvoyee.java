@@ -16,6 +16,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -46,11 +49,14 @@ public class CvEnvoyee implements Serializable {
 	@JoinColumn(name = "consultant_id")
 	private Consultant consultant;
 	
+	
+	
 	public CvEnvoyee() {
 	}
 	
+	
 	public CvEnvoyee(Long idcv, Date dateEnvoi, String partenairClient, String nomSociete, float tJM, String remarques,
-			String statut, Set<Contact> contact) {
+			String statut, Set<Contact> contact, Consultant consultant) {
 		super();
 		this.idcv = idcv;
 		this.dateEnvoi = dateEnvoi;
@@ -60,28 +66,10 @@ public class CvEnvoyee implements Serializable {
 		this.remarques = remarques;
 		Statut = statut;
 		this.contact = contact;
-	}
-	public CvEnvoyee(Date dateEnvoi, String partenairClient, String nomSociete, float tJM, String remarques,
-			String statut) {
-		this.dateEnvoi = dateEnvoi;
-		PartenairClient = partenairClient;
-		NomSociete = nomSociete;
-		TJM = tJM;
-		this.remarques = remarques;
-		Statut = statut;
+		this.consultant = consultant;
 	}
 
-	public CvEnvoyee(Long idcv, Date dateEnvoi, String partenairClient, String nomSociete, float tJM, String remarques,
-			String statut) {
-		super();
-		this.idcv = idcv;
-		this.dateEnvoi = dateEnvoi;
-		PartenairClient = partenairClient;
-		NomSociete = nomSociete;
-		TJM = tJM;
-		this.remarques = remarques;
-		Statut = statut;
-	}
+
 
 	public Set<Contact> getContact() {
 		return contact;

@@ -63,5 +63,9 @@ public class EntretienServicelmpl  implements EntretienService{
 	public List<EntretienPartenaire> getAllEntretiensByConsultantId(Long id) {
 		return entretienRepository.findAllByConsultantId(id);
 	}
+	@Override
+	public EntretienPartenaire getAllEntretiensByCvId(Long id) {
+		return entretienRepository.findByCvEnvoyeeIdcv(id);
+	}
 
 }
