@@ -63,5 +63,10 @@ public class ValidationServiceImpl implements ValidationService{
 	public List<Validation> getAllEntretiensByConsultantId(Long consultantId) {
 		return validationRepository.findAllByConsultantId(consultantId);
 	}
+	@Override
+	public Validation getValidationByCvId(Long id) {
+		
+		return validationRepository.findByCvEnvoyeeIdcv(id);
+	}
 
 }

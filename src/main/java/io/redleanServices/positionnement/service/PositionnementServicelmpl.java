@@ -51,9 +51,8 @@ public class PositionnementServicelmpl  implements PositionnementService{
 	}
 
 	@Override
-	public Positionnement updatePositionnement(Positionnement adv, Long idAd) {
-		Positionnement a = adv;
-		return positionnementRepository.save(a);
+	public Positionnement updatePositionnement(Positionnement adv) {
+		return positionnementRepository.save(adv);
 	}
 
 	@Override
@@ -64,6 +63,10 @@ public class PositionnementServicelmpl  implements PositionnementService{
 	@Override
 	public List<Positionnement> getAllEntretiensByConsultantId(Long consultantId) {
 		return positionnementRepository.findAllByConsultantId(consultantId);
+	}
+	@Override
+	public Positionnement getAllPositionnementByCvId(Long id) {
+		return positionnementRepository.findByCvEnvoyeeIdcv(id);
 	}
 
 }

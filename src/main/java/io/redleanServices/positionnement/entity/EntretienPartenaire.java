@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class EntretienPartenaire implements Serializable  {
 	@Id
@@ -27,11 +29,13 @@ public class EntretienPartenaire implements Serializable  {
 	private  float TJM ;
 	private String Statut;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "consultant_id")
 	private Consultant consultant;
-	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@JsonIgnore
+	@OneToOne
     @JoinColumn(name = "cv_envoyee_id")
 	private CvEnvoyee cvEnvoyee;
 	

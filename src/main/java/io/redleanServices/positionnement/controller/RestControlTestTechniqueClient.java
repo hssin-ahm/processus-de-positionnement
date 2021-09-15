@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.redleanServices.positionnement.dao.CvEnvoyeeRepository;
 import io.redleanServices.positionnement.dao.TestTechniqueClientRepository;
 import io.redleanServices.positionnement.entity.Consultant;
+import io.redleanServices.positionnement.entity.CvEnvoyee;
 import io.redleanServices.positionnement.entity.EntretienPartenaire;
+import io.redleanServices.positionnement.entity.Positionnement;
 import io.redleanServices.positionnement.entity.TestTechniqueClient;
 import io.redleanServices.positionnement.service.ConsultantServiceImpl;
 import io.redleanServices.positionnement.service.TestTechniqueClientServicelmpl;
@@ -34,13 +37,52 @@ public class RestControlTestTechniqueClient {
 	@Autowired 
 	ConsultantServiceImpl consultantService;
 	
-	@PostMapping("/ajouterTestTechniqueClient")
+	@Autowired 
+	CvEnvoyeeRepository cvEnvoyeeRepository;
+	
+	@GetMapping("/getTestTechniqueByCvId/{id}") 
+	@ResponseBody 
+	 public TestTechniqueClient getTestTechniqueByCvId(@PathVariable("id") Long id) { 
+		
+		 TestTechniqueClient testTechniqueClient = testTechniqueClientServicelmpl.getTestTechniqueByCvId(id);
+		 
+		 return testTechniqueClient; 
+	} 
+	
+	@PostMapping("/ajouterTestTechnique/{id}/{consultantId}")
 	@ResponseBody
-	public TestTechniqueClient saveTestTechniqueClient(@RequestBody TestTechniqueClient e)
+	public TestTechniqueClient saveEntretien(@RequestBody TestTechniqueClient e, @PathVariable("id") Long id, @PathVariable("consultantId") Long consultantId)
 	{
+		Consultant consultant = consultantService.findEmployeeById(consultantId);
+		Optional<CvEnvoyee> cvEnvoyee = cvEnvoyeeRepository.findById(id);
+		e.setConsultant(consultant);
+		e.setCvEnvoyee(cvEnvoyee.get());
 		testTechniqueClientServicelmpl.saveTestTechniqueClient(e);
 		return e;
 	}
+	
+	@PutMapping(value = "/modifyidTestTechnique/{id}/{consultantId}") 
+	 @ResponseBody 
+	 
+		public TestTechniqueClient updateEntretien(@RequestBody TestTechniqueClient e, @PathVariable("id") Long id, @PathVariable("consultantId") Long consultantId) 
+		{ 	 
+		Consultant consultant = consultantService.findEmployeeById(consultantId);
+		Optional<CvEnvoyee> cvEnvoyee = cvEnvoyeeRepository.findById(id);
+		e.setConsultant(consultant);
+		e.setCvEnvoyee(cvEnvoyee.get());
+		testTechniqueClientServicelmpl.updateEntretien(e);
+	 	return e;
+		}
+	
+	
+	
+//	@PostMapping("/ajouterTestTechniqueClient")
+//	@ResponseBody
+//	public TestTechniqueClient saveTestTechniqueClient(@RequestBody TestTechniqueClient e)
+//	{
+//		testTechniqueClientServicelmpl.saveTestTechniqueClient(e);
+//		return e;
+//	}
 	@PostMapping("/ajouterTestTechniqueClient/{consultantId}")
 	@ResponseBody
 	public TestTechniqueClient saveEntretienByConsId(@RequestBody TestTechniqueClient e, @PathVariable("consultantId") Long consultantId)

@@ -44,12 +44,15 @@ public class RestControlEntretienPartenaire {
 	@Autowired 
 	CvEnvoyeeRepository cvEnvoyeeRepository;
  
-	@PostMapping("/ajouterEntretien")
+	@PostMapping("/ajouterEntretien/{id}/{consultantId}")
 	@ResponseBody
-	public EntretienPartenaire saveEntretien(@RequestBody EntretienPartenaire e)
+	public EntretienPartenaire saveEntretien(@RequestBody EntretienPartenaire e, @PathVariable("id") Long id, @PathVariable("consultantId") Long consultantId)
 	{
-	 
-		entretienServicelmpl.saveEntretien(e);
+		Consultant consultant = consultantService.findEmployeeById(consultantId);
+		Optional<CvEnvoyee> cvEnvoyee = cvEnvoyeeRepository.findById(id);
+		e.setConsultant(consultant);
+		e.setCvEnvoyee(cvEnvoyee.get());
+		//entretienServicelmpl.saveEntretien(e);
 		return e;
 	}
 	@PostMapping("/ajouterEntretien/{consultantId}")
@@ -78,18 +81,7 @@ public class RestControlEntretienPartenaire {
 	 public EntretienPartenaire getAllEntretiensByCvId(@PathVariable("id") Long id) { 
 		
 		 EntretienPartenaire entretienPartenaire = entretienServicelmpl.getAllEntretiensByCvId(id);
-		 Optional<CvEnvoyee> cvEnvoyee = cvEnvoyeeRepository.findById(id);
-		 CvEnvoyee cvEnv = new CvEnvoyee();
-		 cvEnv.setIdcv(cvEnvoyee.get().getIdcv());
-		 cvEnv.setConsultant(cvEnvoyee.get().getConsultant());
-		 cvEnv.setContact(cvEnvoyee.get().getContact());
-		 cvEnv.setDateEnvoi(cvEnvoyee.get().getDateEnvoi());
-		 cvEnv.setPartenairClient(cvEnvoyee.get().getPartenairClient());
-		 cvEnv.setRemarques(cvEnvoyee.get().getRemarques());
-		 cvEnv.setStatut(cvEnvoyee.get().getStatut());
-		 cvEnv.setNomSociete(cvEnvoyee.get().getNomSociete());
-		 cvEnv.setTJM(cvEnvoyee.get().getTJM());
-		 entretienPartenaire.setCvEnvoyee(cvEnv);
+		
 		 return entretienPartenaire; 
 	} 
 	
@@ -112,25 +104,16 @@ public class RestControlEntretienPartenaire {
 
 
 	
-	@PutMapping(value = "/modifyidEntretien/{id}") 
+	@PutMapping(value = "/modifyidEntretien/{id}/{consultantId}") 
 	 @ResponseBody 
 	 
-		public EntretienPartenaire updateEntretien(@RequestBody EntretienPartenaire e, @PathVariable("id") Long id) 
+		public EntretienPartenaire updateEntretien(@RequestBody EntretienPartenaire e, @PathVariable("id") Long id, @PathVariable("consultantId") Long consultantId) 
 		{ 	 
+		Consultant consultant = consultantService.findEmployeeById(consultantId);
 		Optional<CvEnvoyee> cvEnvoyee = cvEnvoyeeRepository.findById(id);
-		 CvEnvoyee cvEnv = new CvEnvoyee();
-		 cvEnv.setIdcv(cvEnvoyee.get().getIdcv());
-		 cvEnv.setConsultant(cvEnvoyee.get().getConsultant());
-		 cvEnv.setContact(cvEnvoyee.get().getContact());
-		 cvEnv.setDateEnvoi(cvEnvoyee.get().getDateEnvoi());
-		 cvEnv.setPartenairClient(cvEnvoyee.get().getPartenairClient());
-		 cvEnv.setRemarques(cvEnvoyee.get().getRemarques());
-		 cvEnv.setStatut(cvEnvoyee.get().getStatut());
-		 cvEnv.setNomSociete(cvEnvoyee.get().getNomSociete());
-		 cvEnv.setTJM(cvEnvoyee.get().getTJM());
-		 e.setCvEnvoyee(cvEnv);
+		e.setConsultant(consultant);
 		e.setCvEnvoyee(cvEnvoyee.get());
-	 	//entretienServicelmpl.updateEntretien(e);
+	 	entretienServicelmpl.updateEntretien(e);
 	 	return e;
 		}
 	

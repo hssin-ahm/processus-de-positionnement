@@ -8,7 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Positionnement implements Serializable {
 	@Id
@@ -25,8 +29,15 @@ public class Positionnement implements Serializable {
 	private  float TJM ;
 	private String remarque;
 	
+	@JsonIgnore
 	@ManyToOne
+	@JoinColumn(name = "consultant_id")
 	private Consultant consultant;
+
+	@JsonIgnore
+	@OneToOne
+    @JoinColumn(name = "cv_envoyee_id")
+	private CvEnvoyee cvEnvoyee;
 	
 	public Positionnement() {
 		super();
@@ -34,22 +45,45 @@ public class Positionnement implements Serializable {
 	}
 	
 	
+	 
+
+
 	public Positionnement(Long idPositionnement, Date date, String nomDuClient, String secteurActivite,
-			String duredeLaMission, String intituleDuPoste, String descriptifDeLaMission, float tJM, String remarque,
-			Consultant consultant, String lieuDeLaMission) {
+			String duredeLaMission, String lieuDeLaMission, String intituleDuPoste, String descriptifDeLaMission,
+			float tJM, String remarque, Consultant consultant, CvEnvoyee cvEnvoyee) {
 		super();
 		this.idPositionnement = idPositionnement;
 		this.date = date;
 		this.nomDuClient = nomDuClient;
 		SecteurActivite = secteurActivite;
 		this.duredeLaMission = duredeLaMission;
+		this.lieuDeLaMission = lieuDeLaMission;
 		this.intituleDuPoste = intituleDuPoste;
 		this.descriptifDeLaMission = descriptifDeLaMission;
 		TJM = tJM;
 		this.remarque = remarque;
 		this.consultant = consultant;
-		this.lieuDeLaMission = lieuDeLaMission;
+		this.cvEnvoyee = cvEnvoyee;
 	}
+
+
+
+	
+
+	public CvEnvoyee getCvEnvoyee() {
+		return cvEnvoyee;
+	}
+
+
+
+
+
+	public void setCvEnvoyee(CvEnvoyee cvEnvoyee) {
+		this.cvEnvoyee = cvEnvoyee;
+	}
+
+
+
 
 
 	public String getLieuDeLaMission() {

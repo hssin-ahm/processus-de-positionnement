@@ -69,5 +69,9 @@ public class EntretienClientServicelmpl  implements EntretienClientService{
 	public List<EntretienClient> getAllEntretiensByConsultantId(Long id) {
 		return entretienClientRepository.findAllByConsultantId(id);
 	}
+	@Override
+	public EntretienClient getEntretienClientByCvId(Long id) {
+		return entretienClientRepository.findByCvEnvoyeeIdcv(id);
+	}
 
 }

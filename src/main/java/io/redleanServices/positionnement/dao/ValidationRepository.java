@@ -12,4 +12,6 @@ public interface ValidationRepository extends JpaRepository<Validation, Long> {
 
 	List<Validation> findAllByConsultantId(Long consultantId);
 
+	Validation findByCvEnvoyeeIdcv(Long id);
+
 }

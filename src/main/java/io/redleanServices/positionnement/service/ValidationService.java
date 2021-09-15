@@ -14,4 +14,5 @@ public interface ValidationService {
 			Validation updateValidation(Validation adv, Long idAd) ;
 			Validation updateValidation(Validation p) ;
 			List<Validation> getAllEntretiensByConsultantId(Long consultantId);
+			Validation getValidationByCvId(Long id);
 }

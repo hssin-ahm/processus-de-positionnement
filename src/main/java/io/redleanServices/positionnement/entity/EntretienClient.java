@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class EntretienClient implements Serializable  {
 	@Id
@@ -20,9 +23,15 @@ public class EntretienClient implements Serializable  {
 	private String remarque;
 	private String nomDuClient;
 	private String lieu;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "consultant_id")
 	private Consultant consultant;
+
+	@JsonIgnore
+	@OneToOne
+    @JoinColumn(name = "cv_envoyee_id")
+	private CvEnvoyee cvEnvoyee;
 	
 	public Long getIdEntretienClient() {
 		return idEntretienClient;
@@ -81,17 +90,44 @@ public class EntretienClient implements Serializable  {
 		this.nomDuClient = nomDuClient;
 	}
 
-	public EntretienClient(Long idEntretienClient, String typeEntretienClient, Date dateEntretienClient, float tJM,
-			String remarque, String nomDuClient, String lieu, Consultant consultant) {
+
+
+	public String getTypeEntretien() {
+		return TypeEntretien;
+	}
+
+	public void setTypeEntretien(String typeEntretien) {
+		TypeEntretien = typeEntretien;
+	}
+
+	public Date getDateEntretien() {
+		return dateEntretien;
+	}
+
+	public void setDateEntretien(Date dateEntretien) {
+		this.dateEntretien = dateEntretien;
+	}
+
+	public CvEnvoyee getCvEnvoyee() {
+		return cvEnvoyee;
+	}
+
+	public void setCvEnvoyee(CvEnvoyee cvEnvoyee) {
+		this.cvEnvoyee = cvEnvoyee;
+	}
+
+	public EntretienClient(Long idEntretienClient, String typeEntretien, Date dateEntretien, float tJM, String remarque,
+			String nomDuClient, String lieu, Consultant consultant, CvEnvoyee cvEnvoyee) {
 		super();
 		this.idEntretienClient = idEntretienClient;
-		TypeEntretien= typeEntretienClient;
-		this.dateEntretien= dateEntretienClient;
+		TypeEntretien = typeEntretien;
+		this.dateEntretien = dateEntretien;
 		TJM = tJM;
 		this.remarque = remarque;
 		this.nomDuClient = nomDuClient;
 		this.lieu = lieu;
 		this.consultant = consultant;
+		this.cvEnvoyee = cvEnvoyee;
 	}
 
 	public String getLieu() {

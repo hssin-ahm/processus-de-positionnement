@@ -13,7 +13,8 @@ public interface PositionnementService {
 	void deletePositionnementById(Long id);
 	Positionnement getPositionnement(Long id);
 	List<Positionnement> getAllPositionnements();
-	Positionnement updatePositionnement(Positionnement adv, Long idAd) ;
+	Positionnement updatePositionnement(Positionnement adv) ;
 	Positionnement updateBriefing(Positionnement p) ;
 	List<Positionnement> getAllEntretiensByConsultantId(Long consultantId);
+	Positionnement getAllPositionnementByCvId(Long id);
 }

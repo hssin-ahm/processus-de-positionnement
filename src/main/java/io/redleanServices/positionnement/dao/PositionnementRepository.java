@@ -13,4 +13,6 @@ public interface PositionnementRepository extends JpaRepository<Positionnement, 
 
 	List<Positionnement> findAllByConsultantId(Long consultantId);
 
+	Positionnement findByCvEnvoyeeIdcv(Long id);
+
 }

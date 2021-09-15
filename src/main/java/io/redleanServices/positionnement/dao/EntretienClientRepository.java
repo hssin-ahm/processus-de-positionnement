@@ -14,4 +14,6 @@ public interface EntretienClientRepository extends JpaRepository<EntretienClient
 
 	List<EntretienClient> findAllByConsultantId(Long id);
 
+	EntretienClient findByCvEnvoyeeIdcv(Long id);
+
 }

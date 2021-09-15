@@ -15,6 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Briefing implements Serializable {
@@ -37,9 +40,15 @@ public class Briefing implements Serializable {
     )
     private Set<Contact> contact = new HashSet<>();
     
-    @ManyToOne
+    @JsonIgnore
+	@ManyToOne
 	@JoinColumn(name = "consultant_id")
 	private Consultant consultant;
+
+	@JsonIgnore
+	@OneToOne
+    @JoinColumn(name = "cv_envoyee_id")
+	private CvEnvoyee cvEnvoyee;
     
 	public Briefing() {
 		super();
@@ -48,8 +57,11 @@ public class Briefing implements Serializable {
 	
 	
 
+	 
+
+
 	public Briefing(Long idBriefing, Date dateBriefing, String type, String dure, String remarque, Set<Contact> contact,
-			Consultant consultant) {
+			Consultant consultant, CvEnvoyee cvEnvoyee) {
 		super();
 		this.idBriefing = idBriefing;
 		this.dateBriefing = dateBriefing;
@@ -58,7 +70,30 @@ public class Briefing implements Serializable {
 		this.remarque = remarque;
 		this.contact = contact;
 		this.consultant = consultant;
+		this.cvEnvoyee = cvEnvoyee;
 	}
+
+
+
+
+
+
+	public CvEnvoyee getCvEnvoyee() {
+		return cvEnvoyee;
+	}
+
+
+
+
+
+
+	public void setCvEnvoyee(CvEnvoyee cvEnvoyee) {
+		this.cvEnvoyee = cvEnvoyee;
+	}
+
+
+
+
 
 
 	public void setManyContact(Set<Contact> contact) {

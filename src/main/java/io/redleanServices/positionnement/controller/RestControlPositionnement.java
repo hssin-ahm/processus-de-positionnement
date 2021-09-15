@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.redleanServices.positionnement.dao.CvEnvoyeeRepository;
 import io.redleanServices.positionnement.dao.PositionnementRepository;
 import io.redleanServices.positionnement.entity.Consultant;
+import io.redleanServices.positionnement.entity.CvEnvoyee;
+import io.redleanServices.positionnement.entity.EntretienPartenaire;
 import io.redleanServices.positionnement.entity.Positionnement;
 import io.redleanServices.positionnement.service.ConsultantServiceImpl;
 import io.redleanServices.positionnement.service.PositionnementServicelmpl;
@@ -33,6 +36,45 @@ public class RestControlPositionnement {
 	
 	@Autowired 
 	ConsultantServiceImpl consultantService;
+
+	@Autowired 
+	CvEnvoyeeRepository cvEnvoyeeRepository;
+	
+	@GetMapping("/getPositionnementByCvId/{id}") 
+	@ResponseBody 
+	
+	 public Positionnement getPositionnementByCvId(@PathVariable("id") Long id) { 
+		
+		 Positionnement positionnement = positionnementServicelmpl.getAllPositionnementByCvId(id);
+		
+		 return positionnement; 
+	} 
+	
+	@PostMapping("/ajouterPositionnement/{id}/{consultantId}")
+	@ResponseBody
+	public Positionnement saveEntretien(@RequestBody Positionnement e, @PathVariable("id") Long id, @PathVariable("consultantId") Long consultantId)
+	{
+		Consultant consultant = consultantService.findEmployeeById(consultantId);
+		Optional<CvEnvoyee> cvEnvoyee = cvEnvoyeeRepository.findById(id);
+		e.setConsultant(consultant);
+		e.setCvEnvoyee(cvEnvoyee.get());
+		positionnementServicelmpl.savePositionnement(e);
+		return e;
+	}
+	
+	@PutMapping(value = "/modifyidPositionnement/{id}/{consultantId}") 
+	 @ResponseBody 
+	 
+		public Positionnement updateEntretien(@RequestBody Positionnement e, @PathVariable("id") Long id, @PathVariable("consultantId") Long consultantId) 
+		{ 	 
+		Consultant consultant = consultantService.findEmployeeById(consultantId);
+		Optional<CvEnvoyee> cvEnvoyee = cvEnvoyeeRepository.findById(id);
+		e.setConsultant(consultant);
+		e.setCvEnvoyee(cvEnvoyee.get());
+		positionnementServicelmpl.updatePositionnement(e);
+	 	return e;
+		}
+	
 		@PostMapping("/ajouterPositionnement/{consultantId}")
 		@ResponseBody
 		public Positionnement savePositionnement(@RequestBody Positionnement e, @PathVariable("consultantId") Long consultantId)

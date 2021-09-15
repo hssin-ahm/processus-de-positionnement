@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.redleanServices.positionnement.dao.ClientRepository;
+import io.redleanServices.positionnement.entity.EntretienClient;
+import io.redleanServices.positionnement.entity.Positionnement;
 import io.redleanServices.positionnement.entity.client;
 
 @Service 
@@ -62,5 +64,6 @@ public class ClientServicelmpl implements ClientService {
 		return clientRepository.save(p);
 
 	}
+
 
 }

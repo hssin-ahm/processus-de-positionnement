@@ -7,7 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Validation  implements Serializable{
@@ -19,12 +23,28 @@ public class Validation  implements Serializable{
 	private String DemarrageMission ;
 	private String MesuresTeletravail ;
 	private String remarque;
+	@JsonIgnore
 	@ManyToOne
+	@JoinColumn(name = "consultant_id")
 	private Consultant consultant;
+
+	@JsonIgnore
+	@OneToOne
+    @JoinColumn(name = "cv_envoyee_id")
+	private CvEnvoyee cvEnvoyee;
 	
 	
+
+	public CvEnvoyee getCvEnvoyee() {
+		return cvEnvoyee;
+	}
+
+	public void setCvEnvoyee(CvEnvoyee cvEnvoyee) {
+		this.cvEnvoyee = cvEnvoyee;
+	}
+
 	public Validation(Long idValidation, Date date, String feedback, String demarrageMission, String mesuresTeletravail,
-			String remarque, Consultant consultant) {
+			String remarque, Consultant consultant, CvEnvoyee cvEnvoyee) {
 		super();
 		this.idValidation = idValidation;
 		this.date = date;
@@ -33,6 +53,7 @@ public class Validation  implements Serializable{
 		MesuresTeletravail = mesuresTeletravail;
 		this.remarque = remarque;
 		this.consultant = consultant;
+		this.cvEnvoyee = cvEnvoyee;
 	}
 
 	public Date getDate() {

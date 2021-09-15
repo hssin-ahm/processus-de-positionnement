@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import io.redleanServices.positionnement.dao.BriefingRepository;
 import io.redleanServices.positionnement.entity.Briefing;
+import io.redleanServices.positionnement.entity.Positionnement;
 
 @Service 
 public class BriefingServicelmpl  implements BriefingService{
@@ -65,6 +66,10 @@ public class BriefingServicelmpl  implements BriefingService{
 	@Override
 	public List<Briefing> getBriefingsByConsId(Long id) {
 		return briefingRepository.findAllByConsultantId(id);
+	}
+	@Override
+	public Briefing getBriefingByCvId(Long id) {
+		return briefingRepository.findByCvEnvoyeeIdcv(id);
 	}
 
 }

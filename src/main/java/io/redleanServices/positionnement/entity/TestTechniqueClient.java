@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class TestTechniqueClient implements Serializable{
@@ -19,9 +22,18 @@ public class TestTechniqueClient implements Serializable{
 	private String dure;
 	private Date dateEntretien;
 	private String observations;
+
+
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "consultant_id")
 	private Consultant consultant;
+
+	@JsonIgnore
+	@OneToOne
+    @JoinColumn(name = "cv_envoyee_id")
+	private CvEnvoyee cvEnvoyee;
+	
 	public TestTechniqueClient() {
 		super();
 	}
@@ -40,8 +52,23 @@ public class TestTechniqueClient implements Serializable{
 
 
 
+
+
+
+	public CvEnvoyee getCvEnvoyee() {
+		return cvEnvoyee;
+	}
+
+
+
+	public void setCvEnvoyee(CvEnvoyee cvEnvoyee) {
+		this.cvEnvoyee = cvEnvoyee;
+	}
+
+
+
 	public TestTechniqueClient(Long idTestTechniqueClient, String typeEntretien, String dure, Date dateEntretien,
-			String observations, Consultant consultant) {
+			String observations, Consultant consultant, CvEnvoyee cvEnvoyee) {
 		super();
 		this.idTestTechniqueClient = idTestTechniqueClient;
 		TypeEntretien = typeEntretien;
@@ -49,6 +76,7 @@ public class TestTechniqueClient implements Serializable{
 		this.dateEntretien = dateEntretien;
 		this.observations = observations;
 		this.consultant = consultant;
+		this.cvEnvoyee = cvEnvoyee;
 	}
 
 

@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.redleanServices.positionnement.dao.CvEnvoyeeRepository;
 import io.redleanServices.positionnement.dao.EntretienClientRepository;
 import io.redleanServices.positionnement.entity.Consultant;
+import io.redleanServices.positionnement.entity.CvEnvoyee;
 import io.redleanServices.positionnement.entity.EntretienClient;
 import io.redleanServices.positionnement.entity.EntretienPartenaire;
+import io.redleanServices.positionnement.entity.Positionnement;
 import io.redleanServices.positionnement.service.ConsultantServiceImpl;
 import io.redleanServices.positionnement.service.EntretienClientServicelmpl;
 
@@ -32,9 +35,47 @@ public class RestEntretienClient {
 	
 	@Autowired 
 	EntretienClientServicelmpl entretienClientServicelmpl;
+	
+	@Autowired 
+	CvEnvoyeeRepository cvEnvoyeeRepository;
+	
 	@Autowired 
 	ConsultantServiceImpl consultantService;
- 
+	
+	@GetMapping("/getEntretienClientByCvId/{id}") 
+	@ResponseBody 
+	
+	 public EntretienClient getEntretienClientByCvId(@PathVariable("id") Long id) { 
+		
+		 EntretienClient entretienClient = entretienClientServicelmpl.getEntretienClientByCvId(id);
+		 return entretienClient; 
+	} 
+	
+	@PostMapping("/ajouterEntretienClient/{id}/{consultantId}")
+	@ResponseBody
+	public EntretienClient saveEntretien(@RequestBody EntretienClient e, @PathVariable("id") Long id, @PathVariable("consultantId") Long consultantId)
+	{
+		Consultant consultant = consultantService.findEmployeeById(consultantId);
+		Optional<CvEnvoyee> cvEnvoyee = cvEnvoyeeRepository.findById(id);
+		e.setConsultant(consultant);
+		e.setCvEnvoyee(cvEnvoyee.get());
+		entretienClientServicelmpl.saveEntretienClient(e);
+		return e;
+	}
+	
+	@PutMapping(value = "/modifyEntretienClient/{id}/{consultantId}") 
+	 @ResponseBody 
+	 
+		public EntretienClient updateEntretien(@RequestBody EntretienClient e, @PathVariable("id") Long id, @PathVariable("consultantId") Long consultantId) 
+		{ 	 
+		Consultant consultant = consultantService.findEmployeeById(consultantId);
+		Optional<CvEnvoyee> cvEnvoyee = cvEnvoyeeRepository.findById(id);
+		e.setConsultant(consultant);
+		e.setCvEnvoyee(cvEnvoyee.get());
+		entretienClientServicelmpl.updateEntretienClient(e);
+	 	return e;
+		}
+	
 	@PostMapping("/ajouterEntretienClient/{consultantId}")
 	@ResponseBody
 	public EntretienClient saveEntretienClient(@RequestBody EntretienClient ec, @PathVariable("consultantId") Long consultantId)

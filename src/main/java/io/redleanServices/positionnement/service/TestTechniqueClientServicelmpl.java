@@ -70,4 +70,8 @@ public class TestTechniqueClientServicelmpl  implements TestTechniqueClientServi
 		return testTechniqueClientRepository.findAllByConsultantId(id);
 	}
 
+	public TestTechniqueClient getTestTechniqueByCvId(Long id) {
+		return testTechniqueClientRepository.findByCvEnvoyeeIdcv(id);
+	}
+
 }

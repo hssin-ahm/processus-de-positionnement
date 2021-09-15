@@ -12,4 +12,6 @@ public interface TestTechniqueClientRepository extends JpaRepository<TestTechniq
 
 	List<TestTechniqueClient> findAllByConsultantId(Long id);
 
+	TestTechniqueClient findByCvEnvoyeeIdcv(Long id);
+
 }

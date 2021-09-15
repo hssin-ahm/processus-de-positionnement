@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.redleanServices.positionnement.service.ConsultantServiceImpl;
 import io.redleanServices.positionnement.service.ValidationServiceImpl;
+import io.redleanServices.positionnement.dao.CvEnvoyeeRepository;
 import io.redleanServices.positionnement.dao.ValidationRepository;
 import io.redleanServices.positionnement.entity.Consultant;
+import io.redleanServices.positionnement.entity.CvEnvoyee;
 import io.redleanServices.positionnement.entity.Positionnement;
 import io.redleanServices.positionnement.entity.Validation;
 
@@ -35,6 +37,44 @@ public class RestControlValidation {
 	
 	@Autowired 
 	ConsultantServiceImpl consultantService;
+	
+	@Autowired 
+	CvEnvoyeeRepository cvEnvoyeeRepository;
+	
+	@GetMapping("/getValidationByCvId/{id}") 
+	@ResponseBody 
+	
+	 public Validation getValidationByCvId(@PathVariable("id") Long id) { 
+		
+		 Validation validation = validationServiceImpl.getValidationByCvId(id);
+		 
+		 return validation; 
+	} 
+	
+	@PostMapping("/ajouterValidation/{id}/{consultantId}")
+	@ResponseBody
+	public Validation saveEntretien(@RequestBody Validation e, @PathVariable("id") Long id, @PathVariable("consultantId") Long consultantId)
+	{
+		Consultant consultant = consultantService.findEmployeeById(consultantId);
+		Optional<CvEnvoyee> cvEnvoyee = cvEnvoyeeRepository.findById(id);
+		e.setConsultant(consultant);
+		e.setCvEnvoyee(cvEnvoyee.get());
+		validationServiceImpl.saveValidation(e);
+		return e;
+	}
+	
+	@PutMapping(value = "/modifyidValidation/{id}/{consultantId}") 
+	 @ResponseBody 
+	 
+		public Validation updateEntretien(@RequestBody Validation e, @PathVariable("id") Long id, @PathVariable("consultantId") Long consultantId) 
+		{ 	 
+		Consultant consultant = consultantService.findEmployeeById(consultantId);
+		Optional<CvEnvoyee> cvEnvoyee = cvEnvoyeeRepository.findById(id);
+		e.setConsultant(consultant);
+		e.setCvEnvoyee(cvEnvoyee.get());
+		validationServiceImpl.updateValidation(e);
+	 	return e;
+		}
 	
 	@PostMapping("/ajouterValidation/{consultantId}")
 	@ResponseBody

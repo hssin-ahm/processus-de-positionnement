@@ -16,8 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.redleanServices.positionnement.dao.ClientRepository;
+import io.redleanServices.positionnement.dao.CvEnvoyeeRepository;
+import io.redleanServices.positionnement.entity.Consultant;
+import io.redleanServices.positionnement.entity.CvEnvoyee;
+import io.redleanServices.positionnement.entity.EntretienClient;
+import io.redleanServices.positionnement.entity.Positionnement;
 import io.redleanServices.positionnement.entity.client;
 import io.redleanServices.positionnement.service.ClientServicelmpl;
+import io.redleanServices.positionnement.service.ConsultantServiceImpl;
 
 @RestController
 @PreAuthorize("hasRole('Admin')")
@@ -30,24 +36,8 @@ public class RestControlClient {
 	@Autowired 
 	ClientServicelmpl clientServicelmpl;
 	
-
-/*
-{
- "prenom": "nn",
-    "remarques": "bbb",
-    "secteuractivite": "bbb",
-    "datedenvoi": null,
-    "intituleposte": "nn",
-    "lieuMission": "nnn",
-    "tjm": 0.0,
-    "dureMission": null,
-    "descriptif": null,
-    "nom": "nn"
-}
-*/
 	
 	
-//http://localhost:8081/SpringMVC/servlet/Client/ajouterClient
 	@PostMapping("/ajouterClient")
 	@ResponseBody
 	public client saveClient(@RequestBody client c)
@@ -57,7 +47,6 @@ public class RestControlClient {
 	}
 	
 	
-	//http://localhost:8081/SpringMVC/servlet/Client/get-all-Clients
 	@GetMapping("/get-all-clients") 
 	@ResponseBody 
 	
@@ -70,40 +59,21 @@ public class RestControlClient {
 
 	
 
-	//http://localhost:8081/SpringMVC/servlet/Client/deleteC/2s
-	@DeleteMapping("/deleteC/{idclient}") 
-	@ResponseBody 
-	void deleteclientById(@PathVariable("idclient") Long idclient){ 
-		clientServicelmpl.deleteclientById(idclient);
-		}  
-/*
-
-{   "idclient":1,
-    "prenom": "nn",
-    "remarques": "bbb",
-    "secteuractivite": "bbb",
-    "datedenvoi": null,
-    "intituleposte": "nn",
-    "lieuMission": "nnn",
-    "tjm": 0.0,
-    "dureMission": null,
-    "descriptif": null,
-    "nom": "nn"
-}
-
-*/
-
-//http://localhost:8081/SpringMVC/servlet/Client/modifyidClient
-	@PutMapping("/modifyidClient") 
-	 @ResponseBody 
-	 
-		public client updateProduit(@RequestBody client c) 
-		{ 	 
-    	
-   		 return clientServicelmpl.updateclient(c);
- 	}
+		@DeleteMapping("/deleteC/{idclient}") 
+		@ResponseBody 
+		void deleteclientById(@PathVariable("idclient") Long idclient){ 
+			clientServicelmpl.deleteclientById(idclient);
+			}  
 	
-	//http://localhost:8081/SpringMVC/servlet/Client/Clients/1
+		 @PutMapping("/modifyidClient") 
+		 @ResponseBody 
+		 
+			public client updateProduit(@RequestBody client c) 
+			{ 	 
+			
+			 return clientServicelmpl.updateclient(c);
+		 }
+		
 
 	   @GetMapping(value = "/Clients/{idclient}")
 	    public Optional<client> afficherUnclient(@PathVariable Long idclient) {

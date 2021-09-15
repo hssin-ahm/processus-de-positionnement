@@ -15,4 +15,5 @@ public interface EntretienClientService {
 	EntretienClient updateEntretienClient(EntretienClient adv, Long idAd) ;
 	EntretienClient updateEntretienClient(EntretienClient p) ;
 	List<EntretienClient> getAllEntretiensByConsultantId(Long id);
+	EntretienClient getEntretienClientByCvId(Long id);
 }

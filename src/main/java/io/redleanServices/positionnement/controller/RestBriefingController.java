@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.redleanServices.positionnement.dao.BriefingRepository;
+import io.redleanServices.positionnement.dao.CvEnvoyeeRepository;
 import io.redleanServices.positionnement.entity.Briefing;
 import io.redleanServices.positionnement.entity.Consultant;
 import io.redleanServices.positionnement.entity.CvEnvoyeContact;
 import io.redleanServices.positionnement.entity.CvEnvoyee;
+import io.redleanServices.positionnement.entity.Positionnement;
 import io.redleanServices.positionnement.service.BriefingServicelmpl;
 import io.redleanServices.positionnement.service.ConsultantServiceImpl;
 import io.redleanServices.positionnement.service.CvEnvoyeeSercicelmpl;
@@ -35,6 +37,29 @@ public class RestBriefingController {
 	 
 	@Autowired 
 	ConsultantServiceImpl consultantService;
+	
+	@Autowired 
+	CvEnvoyeeRepository cvEnvoyeeRepository;
+	
+	@GetMapping("/getBirefingByCvId/{id}") 
+	@ResponseBody 
+	
+	 public Briefing getBirefingByCvId(@PathVariable("id") Long id) { 
+		 Briefing briefing = briefingServicelmpl.getBriefingByCvId(id);
+		 return briefing; 
+	} 
+	
+	@PostMapping("/ajouterBriefing/{id}/{consultantId}")
+	@ResponseBody
+	public Briefing saveEntretien(@RequestBody Briefing e, @PathVariable("id") Long id, @PathVariable("consultantId") Long consultantId)
+	{
+		Consultant consultant = consultantService.findEmployeeById(consultantId);
+		Optional<CvEnvoyee> cvEnvoyee = cvEnvoyeeRepository.findById(id);
+		e.setConsultant(consultant);
+		e.setCvEnvoyee(cvEnvoyee.get());
+		briefingServicelmpl.saveBriefing(e);
+		return e;
+	}
 	
 	@PostMapping("/ajouterBriefing/{idConsultant}")
 	@ResponseBody
@@ -54,6 +79,19 @@ public class RestBriefingController {
 		briefingServicelmpl.saveBriefing(b);
 		return b;
 	}
+	
+	@PutMapping(value = "/modifyidBriefing/{id}/{consultantId}") 
+	 @ResponseBody 
+	 
+		public Briefing updateEntretien(@RequestBody Briefing e, @PathVariable("id") Long id, @PathVariable("consultantId") Long consultantId) 
+		{ 	 
+		Consultant consultant = consultantService.findEmployeeById(consultantId);
+		Optional<CvEnvoyee> cvEnvoyee = cvEnvoyeeRepository.findById(id);
+		e.setConsultant(consultant);
+		e.setCvEnvoyee(cvEnvoyee.get());
+		briefingServicelmpl.updateBriefing(e);
+	 	return e;
+		}
 	
 	@PutMapping("/modifyidBriefing") 
 	@ResponseBody 

@@ -2,6 +2,7 @@ package io.redleanServices.positionnement.service;
 
 import java.util.List;
 
+import io.redleanServices.positionnement.entity.EntretienClient;
 import io.redleanServices.positionnement.entity.client;
 
 
