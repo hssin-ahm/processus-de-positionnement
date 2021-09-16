@@ -33,6 +33,7 @@ public class CvEnvoyee implements Serializable {
 	private float TJM ;
 	private String remarques;
 	private String Statut;
+	private String etapeActuel;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "CVENVOYE_CONTACT",
@@ -56,7 +57,7 @@ public class CvEnvoyee implements Serializable {
 	
 	
 	public CvEnvoyee(Long idcv, Date dateEnvoi, String partenairClient, String nomSociete, float tJM, String remarques,
-			String statut, Set<Contact> contact, Consultant consultant) {
+			String statut, Set<Contact> contact, Consultant consultant, String etapeActuel) {
 		super();
 		this.idcv = idcv;
 		this.dateEnvoi = dateEnvoi;
@@ -67,8 +68,19 @@ public class CvEnvoyee implements Serializable {
 		Statut = statut;
 		this.contact = contact;
 		this.consultant = consultant;
+		this.etapeActuel = etapeActuel;
 	}
 
+
+
+	public String getEtapeActuel() {
+		return etapeActuel;
+	}
+
+
+	public void setEtapeActuel(String etapeActuel) {
+		this.etapeActuel = etapeActuel;
+	}
 
 
 	public Set<Contact> getContact() {

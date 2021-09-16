@@ -72,6 +72,7 @@ public class RestControlCvEnvoyee {
 			cv.setTJM(c.getTJM());
 			cv.setManyContact(c.getContact());
 			cv.setConsultant(c.getConsultant());
+			cv.setEtapeActuel(c.getEtapeActuel());
 			cvEnvoyeeSercicelmpl.updateCvEnvoyee(cv);
 	
 			

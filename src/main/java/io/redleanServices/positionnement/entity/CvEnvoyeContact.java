@@ -13,8 +13,9 @@ public class CvEnvoyeContact {
 	private String Statut;
 	private Set<Contact> contact ;
 	private Consultant consultant;
+	private String etapeActuel;
 	public CvEnvoyeContact(Long idcv, Date dateEnvoi, String partenairClient, String nomSociete, float tJM,
-			String remarques, String statut, Set<Contact> contact) {
+			String remarques, String statut, Set<Contact> contact, String etapeActuel) {
 		super();
 		this.idcv = idcv;
 		this.dateEnvoi = dateEnvoi;
@@ -24,8 +25,17 @@ public class CvEnvoyeContact {
 		this.remarques = remarques;
 		Statut = statut;
 		this.contact = contact;
+		this.etapeActuel = etapeActuel;
 	}
 	
+	public String getEtapeActuel() {
+		return etapeActuel;
+	}
+
+	public void setEtapeActuel(String etapeActuel) {
+		this.etapeActuel = etapeActuel;
+	}
+
 	public CvEnvoyeContact(Long idcv, Date dateEnvoi, String partenairClient, String nomSociete, float tJM,
 			String remarques, String statut, Set<Contact> contact, Consultant consultant) {
 		super();
