@@ -48,6 +48,7 @@ public class RestControlCvEnvoyee {
 		cv.setRemarques(c.getRemarques());
 		cv.setStatut(c.getStatut());
 		cv.setTJM(c.getTJM());
+		cv.setEtapeActuel(c.getEtapeActuel());
 		Consultant consultant = consultantService.findEmployeeById(idConsultant);
 		cv.setConsultant(consultant);
 		cvEnvoyeeSercicelmpl.saveCvEnvoyee(cv);
